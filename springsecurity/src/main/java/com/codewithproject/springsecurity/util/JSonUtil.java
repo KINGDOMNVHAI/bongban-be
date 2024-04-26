@@ -1,6 +1,5 @@
 package com.codewithproject.springsecurity.util;
 
-import com.codewithproject.springsecurity.dto.entitydto.VideoDto;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -60,16 +59,6 @@ public class JSonUtil {
             ObjectMapper mapper = new ObjectMapper();
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             return mapper.readValue(json, clazz);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @SuppressWarnings("rawtypes")
-    public static Object str2list(String json, Class<VideoDto> valueTypeRef) {
-        try {
-            return MAPPER.readValue(json, valueTypeRef);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
