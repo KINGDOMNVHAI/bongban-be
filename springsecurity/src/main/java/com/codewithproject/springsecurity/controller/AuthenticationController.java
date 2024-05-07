@@ -40,4 +40,17 @@ public class AuthenticationController {
     public ResponseEntity<JwtAuthenticationResponse> refresh(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         return ResponseEntity.ok(authenticationService.refreshToken(refreshTokenRequest));
     }
+
+//    @GetMapping("/login/google")
+//    public String googleLogin() {
+//        return "redirect:/oauth2/authorization/google";
+//    }
+//
+//    @GetMapping("/login/google/callback")
+//    public String googleCallback(Authentication authentication) {
+//        OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+//        // Process the user details retrieved from Google
+//        // You can access user attributes using oauth2User.getAttributes()
+//        return "redirect:/home";
+//    }
 }
