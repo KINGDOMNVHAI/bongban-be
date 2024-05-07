@@ -4,8 +4,7 @@ import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
 
 import java.util.List;
 
-public interface BrandService {
+public interface BladeService {
 
-
-    List<BladeDto> getListBrand();
+    List<BladeDto> getListBlade();
 }
