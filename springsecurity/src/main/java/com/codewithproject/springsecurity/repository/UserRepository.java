@@ -16,13 +16,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "TRUNCATE TABLE user", nativeQuery = true)
+    @Query(value = "TRUNCATE TABLE tb_bb_user", nativeQuery = true)
     void truncateTable();
 
     Optional<User> findByEmail(String email);
 
     @Query(value = "SELECT id, email, firstname, lastname, role, username, password "
-            + " FROM user "
+            + " FROM tb_bb_user "
             + " WHERE email LIKE :usernameOrEmail "
             + " OR username LIKE :usernameOrEmail", nativeQuery = true)
     User getUserByEmail(String usernameOrEmail);
@@ -30,7 +30,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByRole(Role role);
 
     @Query(value = "SELECT id, email, firstname, lastname, role, username, password "
-            + " FROM user "
+            + " FROM tb_bb_user "
             + " WHERE role = :role", nativeQuery = true)
     List<User> getListByRole(Role role);
 }
