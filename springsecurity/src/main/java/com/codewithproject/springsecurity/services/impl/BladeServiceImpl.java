@@ -31,4 +31,14 @@ public class BladeServiceImpl implements BladeService {
         }
         return result;
     }
+
+    public List<BladeDto> getListByBladeCD(String bladeCD) {
+        List<BladeDto> resultItemDtoList = new ArrayList<>();
+        List<Object[]> resultList = bladeRepo.getListByBladeCD(bladeCD);
+        for (Object[] object : resultList) {
+            BladeDto resultItemDto = new BladeDto();
+            resultItemDtoList.add(resultItemDto.convertObjectToDto(object));
+        }
+        return resultItemDtoList;
+    }
 }

@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `tb_bb_user` (
   `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `tb_bb_user_chk_1` CHECK ((`role` between 0 and 1))
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- Dumping data for table 2024_BB.tb_bb_user: ~2 rows (approximately)
 DELETE FROM `tb_bb_user`;
