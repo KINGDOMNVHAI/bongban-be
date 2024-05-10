@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `tb_bb_line` (
   `fee` int(11) DEFAULT NULL,
   `end_price` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- Dumping data for table 2024_BB.tb_bb_line: ~3 rows (approximately)
 TRUNCATE TABLE `tb_bb_line`;

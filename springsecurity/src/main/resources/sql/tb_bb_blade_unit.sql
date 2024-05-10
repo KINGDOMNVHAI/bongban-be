@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `tb_bb_blade_unit` (
   `unit_id` varchar(100) DEFAULT NULL,
   `blade_cd` varchar(100) DEFAULT NULL,
   `inspect_percent` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- Dumping data for table 2024_BB.tb_bb_blade_unit: ~3 rows (approximately)
 DELETE FROM `tb_bb_blade_unit`;

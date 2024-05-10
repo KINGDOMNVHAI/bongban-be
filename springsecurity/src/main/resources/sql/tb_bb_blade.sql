@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `tb_bb_blade` (
   `sub_branch` varchar(50) DEFAULT NULL,
   `paddle_tp` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`seq`,`blade_cd`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- Dumping data for table 2024_BB.tb_bb_blade: ~3 rows (approximately)
 DELETE FROM `tb_bb_blade`;
