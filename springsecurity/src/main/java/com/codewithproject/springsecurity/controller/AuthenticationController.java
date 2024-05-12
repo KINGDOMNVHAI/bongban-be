@@ -9,11 +9,7 @@ import com.codewithproject.springsecurity.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 //@CrossOrigin(origins = "*")
 @RestController
@@ -41,11 +37,12 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.refreshToken(refreshTokenRequest));
     }
 
-//    @GetMapping("/login/google")
-//    public String googleLogin() {
-//        return "redirect:/oauth2/authorization/google";
-//    }
-//
+    @GetMapping("/login/google")
+    public String googleLogin() {
+        return "login"; // Return the login view name
+        // Tao duong dan <a href="/oauth2/authorization/google">Login with Google</a>
+    }
+
 //    @GetMapping("/login/google/callback")
 //    public String googleCallback(Authentication authentication) {
 //        OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
@@ -54,3 +51,10 @@ public class AuthenticationController {
 //        return "redirect:/home";
 //    }
 }
+
+//Test the Google login:
+//Start your Spring Boot application.
+//Access the login page (e.g., http://localhost:8080/login) and click on the "Login with Google" link.
+//You should be redirected to the Google login page.
+//After successful authentication, Google will redirect the user back to your application's redirect URI.
+//Handle the user information and perform any necessary operations (e.g., user registration) in the appropriate endpoint.
