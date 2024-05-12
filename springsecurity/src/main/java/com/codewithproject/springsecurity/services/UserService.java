@@ -10,4 +10,6 @@ public interface UserService {
     UserDetailsService userDetailService();
 
     List<User> seederUser();
+
+    public User getUserDetail(String email);
 }

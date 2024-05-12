@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/public/blade")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class BladeController {
 
     @Autowired
     private BladeServiceImpl bladeServiceImpl;
 
-    @GetMapping("/list")
+    @GetMapping("/public/blade/list")
     public List<BladeDto> getListBrand() {
         return bladeServiceImpl.getListBlade();
     }
 
-    @GetMapping("/list-blade/{bladeCD}")
+    @GetMapping("/public/blade/list-blade/{bladeCD}")
     public List<BladeDto> getListByBladeCD(@PathVariable String bladeCD) {
         return bladeServiceImpl.getListByBladeCD(bladeCD);
     }
