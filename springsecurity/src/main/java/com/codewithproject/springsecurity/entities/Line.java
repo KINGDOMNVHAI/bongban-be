@@ -20,8 +20,7 @@ import lombok.Setter;
 public class Line {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private String id;
 
     @Column(name = "blade_unit_id", nullable = false)

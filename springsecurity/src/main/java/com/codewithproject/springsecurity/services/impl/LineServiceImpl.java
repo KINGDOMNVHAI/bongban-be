@@ -45,6 +45,15 @@ public class LineServiceImpl {
 
     public void insertLine(InsertLineRequest req) {
         Line line = new Line();
+        line.setId(req.getId());
+        line.setBladeUnitID(req.getBladeUnitID());
+        line.setPeriodCnt(req.getPeriodCnt());
+        line.setPeriod(req.getPeriod());
+        line.setInitPrice(req.getInitPrice());
+        line.setDeposit(req.getDeposit());
+        line.setDepreciation(req.getDepreciation());
+        line.setFee(req.getFee());
+        line.setEndPrice(req.getEndPrice());
         lineRepo.save(line);
     }
 
