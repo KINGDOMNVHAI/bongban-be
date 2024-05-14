@@ -30,8 +30,7 @@ public class LineController {
     }
 
     @PostMapping("/public/line/register")
-    public String registerLine(@RequestBody InsertLineProgressRequest req) {
-        lineServiceImpl.insertLineProgress(req);
-        return "success";
+    public String registerLine(@RequestBody InsertLineRequest req) {
+        return lineServiceImpl.insertLineProgress(req);
     }
 }

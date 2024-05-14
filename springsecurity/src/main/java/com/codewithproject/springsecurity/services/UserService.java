@@ -4,6 +4,7 @@ import com.codewithproject.springsecurity.entities.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -11,5 +12,5 @@ public interface UserService {
 
     List<User> seederUser();
 
-    public User getUserDetail(String email);
+    Optional<User> getUserDetail(String email);
 }

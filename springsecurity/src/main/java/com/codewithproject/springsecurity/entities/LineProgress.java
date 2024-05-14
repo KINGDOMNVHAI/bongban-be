@@ -1,6 +1,7 @@
 package com.codewithproject.springsecurity.entities;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,13 +20,15 @@ import lombok.Setter;
 @Table(name = "tb_bb_line_progress")
 public class LineProgress {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "line_id", nullable = false)
-    private String lineID;
+    @EmbeddedId
+    private LineProgressCompositeKey id;
 
-    @Column(name = "user_email", nullable = false)
-    private String userEmail;
+//    @Id
+//    @Column(name = "line_id")
+//    private String lineID;
+//
+//    @Column(name = "user_email", nullable = false)
+//    private String userEmail;
 
     @Column(name = "deposit_status")
     private String depositStatus;

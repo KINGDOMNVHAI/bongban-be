@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class InsertLineRequest {
 
+    // Insert Line
     private String id;
 
     private String bladeUnitID;
@@ -25,6 +26,7 @@ public class InsertLineRequest {
 
     private Integer endPrice;
 
+    // Register Line
     private String lineID;
 
     private String userEmail;

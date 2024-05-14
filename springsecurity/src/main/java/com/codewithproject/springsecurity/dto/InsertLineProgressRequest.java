@@ -1,11 +1,10 @@
 package com.codewithproject.springsecurity.dto;
 
-import jakarta.persistence.Column;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@Builder
+@Getter
+@Setter
 public class InsertLineProgressRequest {
 
     private String lineID;

@@ -5,6 +5,7 @@ import com.codewithproject.springsecurity.dto.InsertLineRequest;
 import com.codewithproject.springsecurity.dto.entitydto.LineDto;
 import com.codewithproject.springsecurity.entities.Line;
 import com.codewithproject.springsecurity.entities.LineProgress;
+import com.codewithproject.springsecurity.entities.LineProgressCompositeKey;
 import com.codewithproject.springsecurity.entities.User;
 import com.codewithproject.springsecurity.repository.LineProgressRepository;
 import com.codewithproject.springsecurity.repository.LineRepository;
@@ -57,11 +58,22 @@ public class LineServiceImpl {
         lineRepo.save(line);
     }
 
-    public void insertLineProgress(InsertLineProgressRequest req) {
+    public String insertLineProgress(InsertLineRequest req) {
         // Check user exist
-        User user = userService.getUserDetail(req.getUserEmail());
-        LineProgress lineP = new LineProgress();
-        lineP.setUserEmail(user.getEmail());
-        lineProgressRepo.save(lineP);
+        Optional<User> user = userService.getUserDetail(req.getUserEmail());
+        // Check line exist
+
+        if (user.isPresent()) {
+            LineProgress lineP = new LineProgress();
+            LineProgressCompositeKey linePCompositeKey = new LineProgressCompositeKey();
+            linePCompositeKey.setLineID(req.getLineID());
+            linePCompositeKey.setUserEmail(user.get().getEmail());
+
+            lineP.setId(linePCompositeKey);
+            lineP.setDepositStatus(req.getDepositStatus());
+            lineProgressRepo.save(lineP);
+            return "Success";
+        }
+        return "Fail";
     }
 }
