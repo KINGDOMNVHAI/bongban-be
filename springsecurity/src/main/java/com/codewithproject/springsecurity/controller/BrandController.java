@@ -13,15 +13,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/public/brand")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class BrandController {
 
     @Autowired
     private BrandServiceImpl brandServiceImpl;
 
-    @GetMapping("/list")
+    @GetMapping("/public/brand/list")
     public List<BrandDto> getListBrand() {
         return brandServiceImpl.getListBrand();
+    }
+
+    @GetMapping("/public/brand/list-root")
+    public List<BrandDto> getListBrandParent() {
+        return brandServiceImpl.getListBrandCheckParent(false);
+    }
+
+    @GetMapping("/public/brand/list-sub")
+    public List<BrandDto> getListSubBrand() {
+        return brandServiceImpl.getListBrandCheckParent(true);
     }
 }

@@ -3,6 +3,7 @@ package com.codewithproject.springsecurity.repository;
 import com.codewithproject.springsecurity.entities.Brand;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,4 +15,19 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
     @Query(value = "SELECT b.* "
             + " FROM tb_bb_brand b ", nativeQuery = true)
     List<Brand> getListBrand();
+
+    @Query(value = "SELECT b.* "
+            + " FROM tb_bb_brand b "
+            + " WHERE b.brand_cd = :brandCd ", nativeQuery = true)
+    Optional<Brand> getBrandDetail(@Param("brandCd") String brandCd);
+
+    @Query(value = "SELECT b.* "
+            + " FROM tb_bb_brand b "
+            + " WHERE b.parent LIKE 'ROOT' ", nativeQuery = true)
+    List<Brand> getListBrandParent();
+
+    @Query(value = "SELECT b.* "
+            + " FROM tb_bb_brand b "
+            + " WHERE b.parent NOT LIKE 'ROOT' ", nativeQuery = true)
+    List<Brand> getListSubBrand();
 }
