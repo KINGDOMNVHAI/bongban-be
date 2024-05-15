@@ -1,7 +1,6 @@
 package com.codewithproject.springsecurity.services.impl;
 
-import com.codewithproject.springsecurity.dto.InsertLineProgressRequest;
-import com.codewithproject.springsecurity.dto.InsertLineRequest;
+import com.codewithproject.springsecurity.dto.request.InsertLineRequest;
 import com.codewithproject.springsecurity.dto.entitydto.LineDto;
 import com.codewithproject.springsecurity.entities.Line;
 import com.codewithproject.springsecurity.entities.LineProgress;

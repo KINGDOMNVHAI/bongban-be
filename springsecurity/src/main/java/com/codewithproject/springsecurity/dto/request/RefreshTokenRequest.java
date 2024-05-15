@@ -1,4 +1,4 @@
-package com.codewithproject.springsecurity.dto;
+package com.codewithproject.springsecurity.dto.request;
 
 import lombok.Data;
 

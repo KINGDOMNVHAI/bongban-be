@@ -1,6 +1,5 @@
-package com.codewithproject.springsecurity.dto;
+package com.codewithproject.springsecurity.dto.request;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,7 +1,6 @@
 package com.codewithproject.springsecurity.controller;
 
-import com.codewithproject.springsecurity.dto.InsertLineProgressRequest;
-import com.codewithproject.springsecurity.dto.InsertLineRequest;
+import com.codewithproject.springsecurity.dto.request.InsertLineRequest;
 import com.codewithproject.springsecurity.dto.entitydto.LineDto;
 import com.codewithproject.springsecurity.services.impl.LineServiceImpl;
 import lombok.RequiredArgsConstructor;

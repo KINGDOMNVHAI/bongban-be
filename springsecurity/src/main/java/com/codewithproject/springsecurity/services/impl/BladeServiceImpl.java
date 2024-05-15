@@ -1,6 +1,6 @@
 package com.codewithproject.springsecurity.services.impl;
 
-import com.codewithproject.springsecurity.dto.InsertBladeLineRequest;
+import com.codewithproject.springsecurity.dto.request.InsertBladeLineRequest;
 import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
 import com.codewithproject.springsecurity.entities.Blade;
 import com.codewithproject.springsecurity.entities.Brand;
