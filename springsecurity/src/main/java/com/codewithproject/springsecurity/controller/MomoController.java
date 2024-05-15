@@ -21,12 +21,13 @@ public class MomoController {
     private MomoServiceImpl momoServiceImpl;
 
     @GetMapping("/public/momo/login")
-    public ResponseEntity<String> momoLogin() {
+    public MomoTransactionReportResponse momoLogin() {
+        MomoTransactionReportResponse response = new MomoTransactionReportResponse();
         String token = momoServiceImpl.login();
         if (!token.isEmpty()) {
-            return momoServiceImpl.transactionReport(token);
+            response = momoServiceImpl.transactionReport(token);
         }
-        return null;
+        return response;
     }
 
     // API login POST

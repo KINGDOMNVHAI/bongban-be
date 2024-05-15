@@ -1,8 +1,12 @@
 package com.codewithproject.springsecurity.services.impl;
 
-import com.codewithproject.springsecurity.dto.MomoLoginDataDto;
+import com.codewithproject.springsecurity.dto.ResponseContentDto;
+import com.codewithproject.springsecurity.dto.ResponseDto;
 import com.codewithproject.springsecurity.dto.response.MomoTransactionReportResponse;
 import com.codewithproject.springsecurity.util.ApiUtil;
+import com.codewithproject.springsecurity.util.ArrayUtil;
+import com.codewithproject.springsecurity.util.JSonUtil;
+import com.google.gson.reflect.TypeToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,7 +23,10 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 
+import java.lang.reflect.Type;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -41,7 +48,7 @@ public class MomoServiceImpl {
 
             // Convert the JSON string to a Map<String, Object>
             ObjectMapper objectMapper = new ObjectMapper();
-            MomoLoginDataDto dataDto = objectMapper.readValue(jsonString, new TypeReference<MomoLoginDataDto>() {});
+            ResponseDto dataDto = objectMapper.readValue(jsonString, new TypeReference<ResponseDto>() {});
             Map<String,Object> dataMap = dataDto.getData();
             token = dataMap.get("token").toString();
 
@@ -55,30 +62,28 @@ public class MomoServiceImpl {
         return token;
     }
 
-    public ResponseEntity<String> transactionReport(String bearerToken) {
-//        MomoTransactionReportResponse response = new MomoTransactionReportResponse();
-
+    public MomoTransactionReportResponse transactionReport(String bearerToken) {
+        MomoTransactionReportResponse momoResponse = new MomoTransactionReportResponse();
         String url = "https://business.momo.vn/api/transaction/v2/transactions?pageSize=10&pageNumber=0&fromDate=2024-05-15T00%3A00%3A00.00&toDate=2024-05-15T23%3A59%3A59.00&status=ALL&merchantId=63168&language=vi";
-
-        // Create RestTemplate with custom request factory to support HTTPS
-        RestTemplate restTemplate = new RestTemplate();
-
-        // Set headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(bearerToken);
-
-        RequestEntity requestEntity = new RequestEntity(headers, HttpMethod.GET, URI.create(url));
-
-        ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
-
+        ResponseEntity<String> responseEntity = ApiUtil.callPostApiBearerToken(bearerToken, url);
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            String responseBody = responseEntity.getBody();
-            System.out.println(responseBody);
-        } else {
-            System.out.println("Request failed with status: " + responseEntity.getStatusCode());
+            // Get data
+            Gson gson = new GsonBuilder()
+                    .serializeNulls() // Include null values during serialization
+                    .create();
+            ResponseDto dataDto = ApiUtil.mapToDTO(responseEntity, ResponseDto.class);
+            Map<String,Object> dataMap = dataDto.getData();
+            List<Object> list = ArrayUtil.convertMapValuesToList(dataMap);
+            if (!list.isEmpty()) {
+                // Convert to Momo response
+                String strObj = gson.toJson(dataMap.get("content"));
+                List<MomoTransactionReportResponse> momo = JSonUtil.convertJsonToList(strObj);
+                assert momo != null;
+                if (!momo.isEmpty()) {
+                    momoResponse = momo.get(0);
+                }
+            }
         }
-
-        return responseEntity;
+        return momoResponse;
     }
 }

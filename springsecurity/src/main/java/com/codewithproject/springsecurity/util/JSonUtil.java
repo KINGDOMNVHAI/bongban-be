@@ -1,15 +1,31 @@
 package com.codewithproject.springsecurity.util;
 
+import com.codewithproject.springsecurity.dto.response.MomoTransactionReportResponse;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.StringWriter;
+import java.util.List;
 
 public class JSonUtil {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
+    public static List<MomoTransactionReportResponse> convertJsonToList(String json) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(json, new TypeReference<List<MomoTransactionReportResponse>>() {});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
 
     public static String toJSonString(Object o) {
         try {

@@ -7,11 +7,8 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class MomoLoginDataDto {
-
+public class ResponseDto {
     private Integer status;
     private String message;
     private Map<String, Object> data;
-//    private String username;
-//    private String token;
 }
