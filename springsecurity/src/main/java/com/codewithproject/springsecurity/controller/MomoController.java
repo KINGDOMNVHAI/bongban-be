@@ -4,6 +4,7 @@ import com.codewithproject.springsecurity.dto.response.MomoTransactionReportResp
 import com.codewithproject.springsecurity.services.impl.MomoServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +21,12 @@ public class MomoController {
     private MomoServiceImpl momoServiceImpl;
 
     @GetMapping("/public/momo/login")
-    public MomoTransactionReportResponse momoLogin() {
-        MomoTransactionReportResponse response = new MomoTransactionReportResponse();
+    public ResponseEntity<String> momoLogin() {
         String token = momoServiceImpl.login();
         if (!token.isEmpty()) {
-            response = momoServiceImpl.transactionReport(token);
+            return momoServiceImpl.transactionReport(token);
         }
-        return response;
+        return null;
     }
 
     // API login POST

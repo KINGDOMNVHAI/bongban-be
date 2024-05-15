@@ -4,6 +4,7 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class ApiUtil {
 
@@ -27,6 +28,16 @@ public class ApiUtil {
     public static final String TYPE_PDF_CONSTANT = ".pdf";
     public static final String HTTP_CONNECT_FAIL = "failed";
     public static final int HTTP_JTR_CONNECT_TIME_OUT = 15000; //milliseconds
+
+    public static <T> T callGetApi(String url, Class<T> clazz) {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            return restTemplate.getForObject(url, clazz);
+        } catch (Exception e) {
+            System.out.println("Cannot get response");
+        }
+        return null;
+    }
 
 //    public static <T> T callGetApiJtr(Map<String, String> map, String fullUrl, Class<T> clazz) {
 //        try {
