@@ -1,6 +1,7 @@
 package com.codewithproject.springsecurity.controller;
 
 import com.codewithproject.springsecurity.dto.entitydto.BrandDto;
+import com.codewithproject.springsecurity.model.ResponseModel;
 import com.codewithproject.springsecurity.services.impl.BrandServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.codewithproject.springsecurity.config.MessageConstants.*;
 
 @RestController
 @RequestMapping("/api/v1")

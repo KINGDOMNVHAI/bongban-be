@@ -1,6 +1,7 @@
 package com.codewithproject.springsecurity.controller;
 
 import com.codewithproject.springsecurity.entities.User;
+import com.codewithproject.springsecurity.model.ResponseModel;
 import com.codewithproject.springsecurity.repository.UserRepository;
 import com.codewithproject.springsecurity.services.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static com.codewithproject.springsecurity.config.MessageConstants.MESS_NOT_FOUND;
+import static com.codewithproject.springsecurity.config.MessageConstants.MESS_SUCCESS;
 
 @RestController
 @RequestMapping("/api/v1/public/user")
@@ -36,7 +40,11 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public List<User> migrateUser() {
-        return userService.seederUser();
+    public ResponseModel<List<User>> migrateUser() {
+        List<User> result = userService.seederUser();
+        if (result.isEmpty()) {
+            return ResponseModel.error(MESS_NOT_FOUND);
+        }
+        return ResponseModel.ok(result, MESS_SUCCESS);
     }
 }

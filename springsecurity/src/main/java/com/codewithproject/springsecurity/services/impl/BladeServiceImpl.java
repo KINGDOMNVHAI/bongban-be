@@ -62,7 +62,7 @@ public class BladeServiceImpl implements BladeService {
 
         if (brandOptional.isEmpty()) {
             result.put(MAP_STATUS_CODE, 404);
-            result.put(MAP_MESSAGE, SAVE_FAILED);
+            result.put(MAP_MESSAGE, MESS_SAVE_FAILED);
             return result;
         }
 
@@ -80,7 +80,7 @@ public class BladeServiceImpl implements BladeService {
         bladeRepo.save(blade);
 
         result.put(MAP_STATUS_CODE, 400);
-        result.put(MAP_MESSAGE, SAVE_SUCCESS);
+        result.put(MAP_MESSAGE, MESS_SAVE_SUCCESS);
         return result;
     }
 }
