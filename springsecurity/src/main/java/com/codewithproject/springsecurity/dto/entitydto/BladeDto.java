@@ -13,9 +13,9 @@ public class BladeDto {
 
     private String brandName;
 
-    private String bladeName;
-
     private String bladeCD;
+
+    private String bladeName;
 
     private String bladeFullName;
 

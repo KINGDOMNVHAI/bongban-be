@@ -1,10 +1,10 @@
 package com.codewithproject.springsecurity.services;
 
-import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
+import com.codewithproject.springsecurity.dto.response.BladeListResponse;
 
 import java.util.List;
 
 public interface BladeService {
 
-    List<BladeDto> getListBlade();
+    List<BladeListResponse> getListBlade();
 }

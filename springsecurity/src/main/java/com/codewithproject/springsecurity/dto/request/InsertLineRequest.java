@@ -12,7 +12,7 @@ public class InsertLineRequest {
 
     private String bladeUnitID;
 
-    private String periodCnt;
+    private Integer periodCnt;
 
     private String period;
 

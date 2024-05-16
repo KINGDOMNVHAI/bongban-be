@@ -14,7 +14,7 @@ public class LineDto {
 
     private String bladeUnitID;
 
-    private String periodCnt;
+    private Integer periodCnt;
 
     private String period;
 

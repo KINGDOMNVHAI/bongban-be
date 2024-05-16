@@ -15,6 +15,15 @@ public interface BladeRepository extends JpaRepository<Blade, Long> {
             + " FROM tb_bb_blade b ", nativeQuery = true)
     List<Blade> getListBlade();
 
+    @Query(value = "SELECT b.seq, b.brand_cd, b.brand_name, b.blade_cd, b.blade_name, b.blade_full_name "
+            + ", bu.unit_id, bu.blade_cd "
+            + ", l.blade_unit_id, l.period, l.period_cnt"
+            + ", l.init_price, l.deposit, l.depreciation, l.fee, l.end_price "
+            + "FROM tb_bb_blade b "
+            + "join tb_bb_blade_unit bu on bu.blade_cd = b.blade_cd "
+            + "join tb_bb_line l on bu.unit_id = l.blade_unit_id ", nativeQuery = true)
+    List<Object[]> getListBladeLine();
+
     @Query(value = "SELECT b.seq" +
             ", b.brand_cd" +
             ", b.brand_name" +

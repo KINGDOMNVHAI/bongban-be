@@ -27,7 +27,7 @@ public class Line {
     private String bladeUnitID;
 
     @Column(name = "period_cnt")
-    private String periodCnt;
+    private Integer periodCnt;
 
     @Column(name = "period")
     private String period;

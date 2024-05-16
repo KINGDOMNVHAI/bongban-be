@@ -2,6 +2,7 @@ package com.codewithproject.springsecurity.controller;
 
 import com.codewithproject.springsecurity.dto.request.InsertBladeLineRequest;
 import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
+import com.codewithproject.springsecurity.dto.response.BladeListResponse;
 import com.codewithproject.springsecurity.services.impl.BladeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class BladeController {
     private BladeServiceImpl bladeServiceImpl;
 
     @GetMapping("/public/blade/list")
-    public List<BladeDto> getListBrand() {
+    public List<BladeListResponse> getListBrand() {
         return bladeServiceImpl.getListBlade();
     }
 

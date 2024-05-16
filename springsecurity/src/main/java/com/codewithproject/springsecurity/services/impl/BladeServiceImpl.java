@@ -2,6 +2,7 @@ package com.codewithproject.springsecurity.services.impl;
 
 import com.codewithproject.springsecurity.dto.request.InsertBladeLineRequest;
 import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
+import com.codewithproject.springsecurity.dto.response.BladeListResponse;
 import com.codewithproject.springsecurity.entities.Blade;
 import com.codewithproject.springsecurity.entities.Brand;
 import com.codewithproject.springsecurity.repository.BladeRepository;
@@ -28,19 +29,17 @@ public class BladeServiceImpl implements BladeService {
     @Autowired
     private BrandRepository brandRepo;
 
-    public List<BladeDto> getListBlade() {
-        List<BladeDto> result = new ArrayList<>();
-        List<Blade> listBrand = bladeRepo.getListBlade();
-        if (!listBrand.isEmpty()) {
-            result = listBrand.stream().map(b -> {
-                BladeDto dto = new BladeDto();
-                dto.setSeq(b.getSeq());
-                dto.setBrandCD(b.getBrandCD());
-                dto.setBrandName(b.getBrandName());
-                return dto;
-            }).collect(Collectors.toList());
+    public List<BladeListResponse> getListBlade() {
+        List<BladeListResponse> resultItemDtoList = new ArrayList<>();
+        List<Object[]> resultList = bladeRepo.getListBladeLine();
+
+        if (!resultList.isEmpty()) {
+            for (Object[] object : resultList) {
+                BladeListResponse dto = new BladeListResponse();
+                resultItemDtoList.add(dto.convertObjectToDto(object));
+            }
         }
-        return result;
+        return resultItemDtoList;
     }
 
     public List<BladeDto> getListByBladeCD(String bladeCD) {
