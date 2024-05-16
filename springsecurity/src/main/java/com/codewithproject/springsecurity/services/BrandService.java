@@ -9,5 +9,5 @@ public interface BrandService {
 
     List<BrandDto> getListBrand();
 
-    List<BrandDto> getListBrandCheckParent(boolean hasParent);
+    List<BrandDto> getListBrandCheckParent(boolean hasParent, String brandCD);
 }

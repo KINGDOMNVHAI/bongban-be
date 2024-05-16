@@ -24,10 +24,11 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
     @Query(value = "SELECT b.* "
             + " FROM tb_bb_brand b "
             + " WHERE b.parent LIKE 'ROOT' ", nativeQuery = true)
-    List<Brand> getListBrandParent();
+    List<Brand> getListBrandParentRoot();
 
     @Query(value = "SELECT b.* "
             + " FROM tb_bb_brand b "
-            + " WHERE b.parent NOT LIKE 'ROOT' ", nativeQuery = true)
-    List<Brand> getListSubBrand();
+            + " WHERE b.parent NOT LIKE 'ROOT' "
+            + " AND b.parent LIKE :brandCd ", nativeQuery = true)
+    List<Brand> getListSubBrandByBrandCD(@Param("brandCd") String brandCD);
 }

@@ -33,13 +33,13 @@ public class BrandServiceImpl implements BrandService {
         return result;
     }
 
-    public List<BrandDto> getListBrandCheckParent(boolean hasParent) {
+    public List<BrandDto> getListBrandCheckParent(boolean hasParent, String brandCD) {
         List<BrandDto> result = new ArrayList<>();
         List<Brand> listBrand = new ArrayList<>();
         if (hasParent) {
-            listBrand = brandRepo.getListSubBrand();
+            listBrand = brandRepo.getListSubBrandByBrandCD(brandCD);
         } else {
-            listBrand = brandRepo.getListBrandParent();
+            listBrand = brandRepo.getListBrandParentRoot();
         }
 
         if (!listBrand.isEmpty()) {

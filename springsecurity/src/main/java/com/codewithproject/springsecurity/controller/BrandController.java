@@ -4,6 +4,8 @@ import com.codewithproject.springsecurity.dto.entitydto.BrandDto;
 import com.codewithproject.springsecurity.model.ResponseModel;
 import com.codewithproject.springsecurity.services.impl.BrandServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,11 +32,13 @@ public class BrandController {
 
     @GetMapping("/public/brand/list-root")
     public List<BrandDto> getListBrandParent() {
-        return brandServiceImpl.getListBrandCheckParent(false);
+        return brandServiceImpl.getListBrandCheckParent(false, null);
     }
 
-    @GetMapping("/public/brand/list-sub")
-    public List<BrandDto> getListSubBrand() {
-        return brandServiceImpl.getListBrandCheckParent(true);
+    @GetMapping("/public/brand/list-sub/{brandCD}")
+    public List<BrandDto> getListSubBrand(
+            @PathVariable String brandCD
+    ) {
+        return brandServiceImpl.getListBrandCheckParent(true, brandCD);
     }
 }
