@@ -1,7 +1,7 @@
 package com.codewithproject.springsecurity.services.impl;
 
 import com.codewithproject.springsecurity.config.MessageConstants;
-import com.codewithproject.springsecurity.dto.JwtAuthenticationResponse;
+import com.codewithproject.springsecurity.dto.response.JwtAuthenticationResponse;
 import com.codewithproject.springsecurity.dto.request.RefreshTokenRequest;
 import com.codewithproject.springsecurity.dto.request.SignInRequest;
 import com.codewithproject.springsecurity.dto.request.SignUpRequest;

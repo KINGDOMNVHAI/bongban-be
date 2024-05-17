@@ -6,8 +6,10 @@ import com.codewithproject.springsecurity.dto.response.BladeListResponse;
 import com.codewithproject.springsecurity.entities.Blade;
 import com.codewithproject.springsecurity.entities.Brand;
 import com.codewithproject.springsecurity.repository.BladeRepository;
+import com.codewithproject.springsecurity.repository.BladeUnitRepository;
 import com.codewithproject.springsecurity.repository.BrandRepository;
 import com.codewithproject.springsecurity.services.BladeService;
+import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,9 @@ public class BladeServiceImpl implements BladeService {
 
     @Autowired
     private BladeRepository bladeRepo;
+
+    @Autowired
+    private BladeUnitRepository bladeUnitRepo;
 
     @Autowired
     private BrandRepository brandRepo;
@@ -52,6 +57,7 @@ public class BladeServiceImpl implements BladeService {
         return resultItemDtoList;
     }
 
+    // Insert Blade, Line, Line Progress
     public Map<String,Object> insertBladeLine(InsertBladeLineRequest req) {
         Map<String,Object> result = new HashMap<>();
 
@@ -65,8 +71,13 @@ public class BladeServiceImpl implements BladeService {
             return result;
         }
 
+        // Count blade_cd in table blade_unit
+
+
+
         Brand brandDetail = brandOptional.get();
         Blade blade = new Blade();
+
         blade.setBladeName(req.getBladeName());
         blade.setBladeCD(req.getBladeCD());
         blade.setBladeFullName(req.getBladeFullName());

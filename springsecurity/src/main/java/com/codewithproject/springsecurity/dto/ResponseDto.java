@@ -8,7 +8,11 @@ import java.util.Map;
 @Getter
 @Setter
 public class ResponseDto {
+    private Map<String, Object> data;
+    // Momo
     private Integer status;
     private String message;
-    private Map<String, Object> data;
+    // PayOS
+    private String code;
+    private String desc;
 }

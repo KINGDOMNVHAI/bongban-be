@@ -1,6 +1,6 @@
 package com.codewithproject.springsecurity.controller;
 
-import com.codewithproject.springsecurity.dto.JwtAuthenticationResponse;
+import com.codewithproject.springsecurity.dto.response.JwtAuthenticationResponse;
 import com.codewithproject.springsecurity.dto.request.RefreshTokenRequest;
 import com.codewithproject.springsecurity.dto.request.SignInRequest;
 import com.codewithproject.springsecurity.dto.request.SignUpRequest;

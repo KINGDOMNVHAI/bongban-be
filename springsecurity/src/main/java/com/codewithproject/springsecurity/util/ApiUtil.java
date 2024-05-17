@@ -1,22 +1,16 @@
 package com.codewithproject.springsecurity.util;
 
-import com.codewithproject.springsecurity.dto.response.MomoTransactionReportResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Type;
 import java.net.URI;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
 
 public class ApiUtil {
 
@@ -49,6 +43,19 @@ public class ApiUtil {
             System.out.println("Cannot get response");
         }
         return null;
+    }
+
+    public static <T> T callPostApi(String url, Object requestObject, Class<T> clazz) {
+        // Create RestTemplate with custom request factory to support HTTPS
+        RestTemplate restTemplate = new RestTemplate();
+
+        // Set headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Object> requestEntity = new HttpEntity<>(requestObject, headers);
+
+        return restTemplate.postForObject(url, requestEntity, clazz);
     }
 
     public static ResponseEntity<String> callPostApiBearerToken(String bearerToken, String url) {

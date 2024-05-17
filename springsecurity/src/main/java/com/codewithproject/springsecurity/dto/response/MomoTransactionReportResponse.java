@@ -10,7 +10,7 @@ import java.util.Date;
 public class MomoTransactionReportResponse {
 
     private String id;
-     private Date createdDate; // 2024-05-15T08:19:09.067
+    private Date createdDate; // 2024-05-15T08:19:09.067
     private String billId;
     private String sourceBillId;
     private Long coreTranId;
