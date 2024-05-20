@@ -14,15 +14,6 @@ public class JSonUtil {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public static List<MomoTransactionReportResponse> convertJsonToList(String json) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.readValue(json, new TypeReference<List<MomoTransactionReportResponse>>() {});
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
 
 

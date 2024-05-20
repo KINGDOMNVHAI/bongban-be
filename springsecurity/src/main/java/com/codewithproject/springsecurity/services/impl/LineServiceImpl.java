@@ -75,4 +75,12 @@ public class LineServiceImpl {
         }
         return "Fail";
     }
+
+    public Integer countByBladeCD(String lineID) {
+        Integer result = lineProgressRepo.countByBladeCD(lineID);
+        if (result != null) {
+            return result;
+        }
+        return 0;
+    }
 }

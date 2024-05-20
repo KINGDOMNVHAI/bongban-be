@@ -1,13 +1,21 @@
 package com.codewithproject.springsecurity.services.impl;
 
 import com.codewithproject.springsecurity.dto.ResponseDto;
+import com.codewithproject.springsecurity.dto.response.MomoTransactionReportResponse;
+import com.codewithproject.springsecurity.dto.response.PayOSTransactionReportResponse;
 import com.codewithproject.springsecurity.dto.response.ThirdPartyAuthResponse;
 import com.codewithproject.springsecurity.util.ApiUtil;
+import com.codewithproject.springsecurity.util.ArrayUtil;
+import com.codewithproject.springsecurity.util.JSonUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -42,4 +50,43 @@ public class PayOSServiceImpl {
         }
         return result;
     }
+
+    public PayOSTransactionReportResponse transactionReport(String bearerToken) {
+        PayOSTransactionReportResponse payosResponse = new PayOSTransactionReportResponse();
+        String url = "https://api-app.payos.vn/organizations/b8ab7e3a133811ef915f0242ac110002/statistics/payment-link?typeOrder=PAID&page=0&pageSize=20";
+        ResponseEntity<String> responseEntity = ApiUtil.callPostApiBearerToken(bearerToken, url);
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            // Get data
+            Gson gson = new GsonBuilder()
+                    .serializeNulls() // Include null values during serialization
+                    .create();
+            ResponseDto dataDto = ApiUtil.mapToDTO(responseEntity, ResponseDto.class);
+            Map<String,Object> dataMap = dataDto.getData();
+            List<Object> list = ArrayUtil.convertMapValuesToList(dataMap);
+            if (!list.isEmpty()) {
+                // Convert to PayOS response
+                String strObj = gson.toJson(dataMap.get("orders"));
+                List<PayOSTransactionReportResponse> payos = convertJsonToList(strObj);
+//                assert payos != null;
+//                if (!payos.isEmpty()) {
+//                    payosResponse = payos.get(0);
+//                }
+            }
+        }
+        return payosResponse;
+    }
+
+    private static List<PayOSTransactionReportResponse> convertJsonToList(String json) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(json, new TypeReference<List<PayOSTransactionReportResponse>>() {});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // https://my.payos.vn/login
+    // huynhan007@gmail.com
+    // Payos4789!
 }

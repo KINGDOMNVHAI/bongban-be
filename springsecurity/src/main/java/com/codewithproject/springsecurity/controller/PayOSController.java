@@ -1,5 +1,6 @@
 package com.codewithproject.springsecurity.controller;
 
+import com.codewithproject.springsecurity.dto.response.MomoTransactionReportResponse;
 import com.codewithproject.springsecurity.dto.response.PayOSTransactionReportResponse;
 import com.codewithproject.springsecurity.dto.response.ThirdPartyAuthResponse;
 import com.codewithproject.springsecurity.model.ResponseModel;
@@ -25,10 +26,15 @@ public class PayOSController {
         return response;
     }
 
+    @GetMapping("/public/payos/transaction-report")
+    public PayOSTransactionReportResponse payosTransactionReport() {
+        PayOSTransactionReportResponse result = new PayOSTransactionReportResponse();
+        ThirdPartyAuthResponse response = payOSServiceImpl.login();
+        if (!response.getToken().isEmpty()) {
+            result = payOSServiceImpl.transactionReport(response.getToken());
+        }
+        return result;
+    }
 
 
-    // https://my.payos.vn/login
-    // huynhan007@gmail.com
-    // Payos4789!
-    // f859ce0c1893c53f5b644965885183e21b251490fa0f8f67b4aa536def860cd8b960580f00fb7d3a13ef110a336869f3a89daea2f4970badc77a6b2c7d2e5be6
 }

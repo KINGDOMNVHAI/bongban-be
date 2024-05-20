@@ -77,7 +77,7 @@ public class MomoServiceImpl {
             if (!list.isEmpty()) {
                 // Convert to Momo response
                 String strObj = gson.toJson(dataMap.get("content"));
-                List<MomoTransactionReportResponse> momo = JSonUtil.convertJsonToList(strObj);
+                List<MomoTransactionReportResponse> momo = convertJsonToList(strObj);
                 assert momo != null;
                 if (!momo.isEmpty()) {
                     momoResponse = momo.get(0);
@@ -85,5 +85,15 @@ public class MomoServiceImpl {
             }
         }
         return momoResponse;
+    }
+
+    private static List<MomoTransactionReportResponse> convertJsonToList(String json) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(json, new TypeReference<List<MomoTransactionReportResponse>>() {});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

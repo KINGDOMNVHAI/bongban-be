@@ -26,6 +26,9 @@ import static com.codewithproject.springsecurity.config.MessageConstants.*;
 public class BladeServiceImpl implements BladeService {
 
     @Autowired
+    private LineServiceImpl lineServiceImpl;
+
+    @Autowired
     private BladeRepository bladeRepo;
 
     @Autowired
@@ -41,7 +44,10 @@ public class BladeServiceImpl implements BladeService {
         if (!resultList.isEmpty()) {
             for (Object[] object : resultList) {
                 BladeListResponse dto = new BladeListResponse();
-                resultItemDtoList.add(dto.convertObjectToDto(object));
+                dto = dto.convertObjectToDto(object);
+                Integer count = lineServiceImpl.countByBladeCD(dto.getBladeCD());
+                dto.setCountRegister(count);
+                resultItemDtoList.add(dto);
             }
         }
         return resultItemDtoList;

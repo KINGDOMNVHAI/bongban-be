@@ -30,6 +30,9 @@ public class BladeListResponse {
     private Integer fee;
     private Integer endPrice;
 
+    // Others
+    private Integer countRegister;
+
     public BladeListResponse convertObjectToDto(Object[] object) {
         BladeListResponse dto = new BladeListResponse();
         dto.setSeq((Integer) object[0]);
