@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `tb_bb_blade` (
 DELETE FROM `tb_bb_blade`;
 INSERT INTO `tb_bb_blade` (`seq`, `brand_cd`, `brand_name`, `blade_cd`, `blade_name`, `blade_full_name`, `sub_branch`, `paddle_tp`) VALUES
 	(1, 'NTK', 'Nittaku', 'NTK_ACS_XXX_FL', 'Acoustic', 'Nittaku Acoustic', 'XXX', 'FL'),
-	(2, 'BUT', 'Butterfly', 'BUT_TMB_ALC_FL', 'Timo Boll ALC', 'Butterfly Timo Boll ALC', 'TMB', NULL),
+	(2, 'BUT', 'Butterfly', 'BUT_TMB_ALC_FL', 'Timo Boll ALC', 'Butterfly Timo Boll ALC', 'TMB', 'FL'),
 	(3, 'NTK', 'Nittaku', 'NTK_ACS_XXX_ST', 'Acoustic', 'Nittaku Acoustic', 'XXX', 'ST');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;

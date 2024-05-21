@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `tb_bb_line` (
 TRUNCATE TABLE `tb_bb_line`;
 INSERT INTO `tb_bb_line` (`blade_unit_id`, `id`, `period_cnt`, `period`, `init_price`, `deposit`, `depreciation`, `fee`, `end_price`) VALUES
 	('BUT_TMB_ALC_FL_00001', '2024_03_00003', '3', '1M', 3000000, 300000, 100000, 50000, 2700000),
-	('NTK_ACS_XXX_FL_00001', '2024_06_00001', '6', '1M', NULL, NULL, NULL, NULL, NULL),
+	('NTK_ACS_XXX_FL_00001', '2024_06_00001', '6', '1M', 4000000, 300000, 100000, 50000, 3700000),
 	('NTK_ACS_XXX_FL_00002', '2024_12_00002', '12', '2W', NULL, NULL, NULL, NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;

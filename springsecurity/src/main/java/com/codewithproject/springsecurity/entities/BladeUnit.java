@@ -16,11 +16,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tb_bb_blade")
+@Table(name = "tb_bb_blade_unit")
 public class BladeUnit {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "unit_id", nullable = false)
     private String unitId;
 

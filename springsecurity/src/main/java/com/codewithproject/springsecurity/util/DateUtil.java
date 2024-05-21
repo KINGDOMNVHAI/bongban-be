@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.time.Year;
+import java.time.Month;
+import java.time.YearMonth;
 
 public class DateUtil {
 
@@ -38,6 +41,15 @@ public class DateUtil {
 
     public static Date getMaxDate() {
         return DateUtil.toDate(DateUtil.MAX_DATE);
+    }
+
+    public static Integer getThisYear() {
+        return Year.now().getValue();
+    }
+
+    public static Integer getThisMonth() {
+        YearMonth yearMonth = YearMonth.now();
+        return yearMonth.getMonthValue();
     }
 
     public static Date toDate(String dateStr) {

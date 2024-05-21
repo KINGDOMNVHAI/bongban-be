@@ -20,19 +20,21 @@ CREATE TABLE IF NOT EXISTS `tb_bb_brand` (
   `brand_cd` varchar(3) NOT NULL,
   `brand_nm` char(50) DEFAULT NULL,
   `parent` varchar(50) DEFAULT NULL,
+  `thumbnail` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`seq`,`brand_cd`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- Dumping data for table 2024_BB.tb_bb_brand: ~7 rows (approximately)
 DELETE FROM `tb_bb_brand`;
-INSERT INTO `tb_bb_brand` (`seq`, `brand_cd`, `brand_nm`, `parent`) VALUES
-	(1, 'NTK', 'Nittaku', 'ROOT'),
-	(2, 'BUT', 'Butterfly', 'ROOT'),
-	(3, 'YSK', 'Yasaka', 'ROOT'),
-	(4, 'DON', 'Donic', 'ROOT'),
-	(5, 'TIB', 'Tibhar', 'ROOT'),
-	(6, 'TMB', 'Timo Boll', 'BUT'),
-	(7, 'ACS', 'Acoustic', 'NTK');
+INSERT INTO `tb_bb_brand` (`seq`, `brand_cd`, `brand_nm`, `parent`, `thumbnail`) VALUES
+	(1, 'NTK', 'Nittaku', 'ROOT', NULL),
+	(2, 'BUT', 'Butterfly', 'ROOT', NULL),
+	(3, 'YSK', 'Yasaka', 'ROOT', NULL),
+	(4, 'DON', 'Donic', 'ROOT', NULL),
+	(5, 'TIB', 'Tibhar', 'ROOT', NULL),
+	(6, 'TMB', 'Timo Boll', 'BUT', 'butterfly-timo-boll-thumbnail.jpg'),
+	(7, 'ACS', 'Acoustic', 'NTK', 'nittaku-acoustic-thumbnail.jpg'),
+	(8, 'GRS', 'Growster', 'YSK', 'yasaka-growster-thumbnail.jpg');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

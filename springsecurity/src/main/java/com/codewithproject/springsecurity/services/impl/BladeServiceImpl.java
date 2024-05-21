@@ -4,11 +4,15 @@ import com.codewithproject.springsecurity.dto.request.InsertBladeLineRequest;
 import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
 import com.codewithproject.springsecurity.dto.response.BladeListResponse;
 import com.codewithproject.springsecurity.entities.Blade;
+import com.codewithproject.springsecurity.entities.BladeUnit;
 import com.codewithproject.springsecurity.entities.Brand;
+import com.codewithproject.springsecurity.entities.Line;
 import com.codewithproject.springsecurity.repository.BladeRepository;
 import com.codewithproject.springsecurity.repository.BladeUnitRepository;
 import com.codewithproject.springsecurity.repository.BrandRepository;
+import com.codewithproject.springsecurity.repository.LineRepository;
 import com.codewithproject.springsecurity.services.BladeService;
+import com.codewithproject.springsecurity.util.DateUtil;
 import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,13 +33,16 @@ public class BladeServiceImpl implements BladeService {
     private LineServiceImpl lineServiceImpl;
 
     @Autowired
+    private BrandRepository brandRepo;
+
+    @Autowired
     private BladeRepository bladeRepo;
 
     @Autowired
     private BladeUnitRepository bladeUnitRepo;
 
     @Autowired
-    private BrandRepository brandRepo;
+    private LineRepository lineRepo;
 
     public List<BladeListResponse> getListBlade() {
         List<BladeListResponse> resultItemDtoList = new ArrayList<>();
@@ -76,14 +83,18 @@ public class BladeServiceImpl implements BladeService {
             result.put(MAP_MESSAGE, MESS_SAVE_FAILED);
             return result;
         }
-
-        // Count blade_cd in table blade_unit
-
-
-
         Brand brandDetail = brandOptional.get();
-        Blade blade = new Blade();
 
+        // Count blade_cd in table blade_unit, find unit_id
+        String unitID = req.getBladeCD();
+        Integer cntBladeCD = bladeUnitRepo.countByBladeCD(req.getBladeCD());
+        if (cntBladeCD == 0) {
+            unitID = unitID + "_00001";
+        } else {
+            unitID = unitID + "_0000" + cntBladeCD;
+        }
+
+        Blade blade = new Blade();
         blade.setBladeName(req.getBladeName());
         blade.setBladeCD(req.getBladeCD());
         blade.setBladeFullName(req.getBladeFullName());
@@ -94,6 +105,28 @@ public class BladeServiceImpl implements BladeService {
 
         blade.setPaddleTP(req.getPaddleTP());
         bladeRepo.save(blade);
+
+        BladeUnit bladeUnit = new BladeUnit();
+        bladeUnit.setUnitId(unitID);
+        bladeUnit.setBladeCD(req.getBladeCD());\
+        bladeUnitRepo.save(bladeUnit);
+
+        // Get line id
+        Integer year = DateUtil.getThisYear();
+        Integer month = DateUtil.getThisMonth();
+        String lineID = year.toString() + "_" + month.toString();
+
+        Line line = new Line();
+        line.setBladeUnitID(unitID);
+        line.setId(lineID);
+        line.setPeriod(req.getPeriod());
+        line.setPeriodCnt(req.getPeriodCnt());
+        line.setInitPrice(req.getInitPrice());
+        line.setDeposit(req.getDeposit());
+        line.setDepreciation(req.getDepreciation());
+        line.setFee(req.getFee());
+        line.setEndPrice(req.getEndPrice());
+        lineRepo.save(line);
 
         result.put(MAP_STATUS_CODE, 400);
         result.put(MAP_MESSAGE, MESS_SAVE_SUCCESS);
