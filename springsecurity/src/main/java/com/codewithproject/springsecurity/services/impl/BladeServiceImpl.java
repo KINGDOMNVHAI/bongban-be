@@ -108,13 +108,19 @@ public class BladeServiceImpl implements BladeService {
 
         BladeUnit bladeUnit = new BladeUnit();
         bladeUnit.setUnitId(unitID);
-        bladeUnit.setBladeCD(req.getBladeCD());\
+        bladeUnit.setBladeCD(req.getBladeCD());
         bladeUnitRepo.save(bladeUnit);
 
         // Get line id
+        Integer count = lineServiceImpl.countByBladeCD(req.getBladeCD());
+        System.out.println(count);
         Integer year = DateUtil.getThisYear();
         Integer month = DateUtil.getThisMonth();
-        String lineID = year.toString() + "_" + month.toString();
+        String monthStr = month.toString();
+        if (month < 10) {
+            monthStr = "0" + monthStr;
+        }
+        String lineID = year.toString() + "_" + monthStr + "_" + DateUtil.giveZeroBeforeNumber("00000", count + 1);
 
         Line line = new Line();
         line.setBladeUnitID(unitID);

@@ -1,6 +1,7 @@
 package com.codewithproject.springsecurity.util;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -167,6 +168,11 @@ public class DateUtil {
         cal.set(Calendar.MILLISECOND, 0);
 
         return cal.getTime();
+    }
+
+    public static String giveZeroBeforeNumber(String zeroStr, int number) {
+        DecimalFormat df = new DecimalFormat(zeroStr);
+        return df.format(number);
     }
 
     public static Date moveDate(Date date, Integer val, Integer type) { //type = 1 Date,2: Month
