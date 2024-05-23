@@ -1,11 +1,11 @@
 package com.codewithproject.springsecurity.util;
 
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Year;
 import java.time.YearMonth;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -13,9 +13,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.time.Year;
-import java.time.Month;
-import java.time.YearMonth;
 
 public class DateUtil {
 
@@ -168,11 +165,6 @@ public class DateUtil {
         cal.set(Calendar.MILLISECOND, 0);
 
         return cal.getTime();
-    }
-
-    public static String giveZeroBeforeNumber(String zeroStr, int number) {
-        DecimalFormat df = new DecimalFormat(zeroStr);
-        return df.format(number);
     }
 
     public static Date moveDate(Date date, Integer val, Integer type) { //type = 1 Date,2: Month

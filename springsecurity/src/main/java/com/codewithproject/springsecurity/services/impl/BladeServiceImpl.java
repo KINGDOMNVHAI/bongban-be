@@ -2,6 +2,7 @@ package com.codewithproject.springsecurity.services.impl;
 
 import com.codewithproject.springsecurity.dto.request.InsertBladeLineRequest;
 import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
+import com.codewithproject.springsecurity.dto.request.SearchBladeRequest;
 import com.codewithproject.springsecurity.dto.response.BladeListResponse;
 import com.codewithproject.springsecurity.entities.Blade;
 import com.codewithproject.springsecurity.entities.BladeUnit;
@@ -13,6 +14,7 @@ import com.codewithproject.springsecurity.repository.BrandRepository;
 import com.codewithproject.springsecurity.repository.LineRepository;
 import com.codewithproject.springsecurity.services.BladeService;
 import com.codewithproject.springsecurity.util.DateUtil;
+import com.codewithproject.springsecurity.util.NumberUtil;
 import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,9 +47,19 @@ public class BladeServiceImpl implements BladeService {
     private LineRepository lineRepo;
 
     public List<BladeListResponse> getListBlade() {
-        List<BladeListResponse> resultItemDtoList = new ArrayList<>();
         List<Object[]> resultList = bladeRepo.getListBladeLine();
+        return setBladeListResponse(resultList);
+    }
 
+    public List<BladeListResponse> searchListBlade(SearchBladeRequest req) {
+        String brandCD = req.getBrandCD() != null ? req.getBrandCD() : "";
+        System.out.println(brandCD);
+        List<Object[]> resultList = bladeRepo.searchListBlade(brandCD);
+        return setBladeListResponse(resultList);
+    }
+
+    private List<BladeListResponse> setBladeListResponse(List<Object[]> resultList) {
+        List<BladeListResponse> resultItemDtoList = new ArrayList<>();
         if (!resultList.isEmpty()) {
             for (Object[] object : resultList) {
                 BladeListResponse dto = new BladeListResponse();
@@ -91,7 +103,7 @@ public class BladeServiceImpl implements BladeService {
         if (cntBladeCD == 0) {
             unitID = unitID + "_00001";
         } else {
-            unitID = unitID + "_0000" + cntBladeCD;
+            unitID = unitID + NumberUtil.giveZeroBeforeNumber("00000", cntBladeCD + 1);
         }
 
         Blade blade = new Blade();
@@ -120,7 +132,7 @@ public class BladeServiceImpl implements BladeService {
         if (month < 10) {
             monthStr = "0" + monthStr;
         }
-        String lineID = year.toString() + "_" + monthStr + "_" + DateUtil.giveZeroBeforeNumber("00000", count + 1);
+        String lineID = year.toString() + "_" + monthStr + "_" + NumberUtil.giveZeroBeforeNumber("00000", count + 1);
 
         Line line = new Line();
         line.setBladeUnitID(unitID);

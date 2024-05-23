@@ -2,6 +2,7 @@ package com.codewithproject.springsecurity.controller;
 
 import com.codewithproject.springsecurity.dto.request.InsertBladeLineRequest;
 import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
+import com.codewithproject.springsecurity.dto.request.SearchBladeRequest;
 import com.codewithproject.springsecurity.dto.response.BladeListResponse;
 import com.codewithproject.springsecurity.services.impl.BladeServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,11 @@ public class BladeController {
     @GetMapping("/public/blade/list")
     public List<BladeListResponse> getListBrand() {
         return bladeServiceImpl.getListBlade();
+    }
+
+    @PostMapping("/public/blade/search")
+    public List<BladeListResponse> searchListBlade(@RequestBody SearchBladeRequest req) {
+        return bladeServiceImpl.searchListBlade(req);
     }
 
     @GetMapping("/public/blade/list-blade/{bladeCD}")
