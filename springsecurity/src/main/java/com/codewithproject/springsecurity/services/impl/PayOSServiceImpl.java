@@ -1,12 +1,10 @@
 package com.codewithproject.springsecurity.services.impl;
 
 import com.codewithproject.springsecurity.dto.ResponseDto;
-import com.codewithproject.springsecurity.dto.response.MomoTransactionReportResponse;
-import com.codewithproject.springsecurity.dto.response.PayOSTransactionReportResponse;
+import com.codewithproject.springsecurity.dto.response.PayOSTransactionResponse;
 import com.codewithproject.springsecurity.dto.response.ThirdPartyAuthResponse;
 import com.codewithproject.springsecurity.util.ApiUtil;
 import com.codewithproject.springsecurity.util.ArrayUtil;
-import com.codewithproject.springsecurity.util.JSonUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -21,6 +19,9 @@ import java.util.Map;
 @Service
 public class PayOSServiceImpl {
 
+    /*
+    * PayOS: huynhan0007@gmail.com / Payos4789!
+    * */
     public ThirdPartyAuthResponse login() {
         ThirdPartyAuthResponse result = new ThirdPartyAuthResponse();
         // Set the request URL and create the request body
@@ -51,8 +52,8 @@ public class PayOSServiceImpl {
         return result;
     }
 
-    public PayOSTransactionReportResponse transactionReport(String bearerToken) {
-        PayOSTransactionReportResponse payosResponse = new PayOSTransactionReportResponse();
+    public PayOSTransactionResponse transactionReport(String bearerToken) {
+        PayOSTransactionResponse payosResponse = new PayOSTransactionResponse();
         String url = "https://api-app.payos.vn/organizations/b8ab7e3a133811ef915f0242ac110002/statistics/payment-link?typeOrder=PAID&page=0&pageSize=20";
         ResponseEntity<String> responseEntity = ApiUtil.callPostApiBearerToken(bearerToken, url);
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
@@ -66,7 +67,7 @@ public class PayOSServiceImpl {
             if (!list.isEmpty()) {
                 // Convert to PayOS response
                 String strObj = gson.toJson(dataMap.get("orders"));
-                List<PayOSTransactionReportResponse> payos = convertJsonToList(strObj);
+                List<PayOSTransactionResponse> payos = convertJsonToList(strObj);
 //                assert payos != null;
 //                if (!payos.isEmpty()) {
 //                    payosResponse = payos.get(0);
@@ -76,10 +77,10 @@ public class PayOSServiceImpl {
         return payosResponse;
     }
 
-    private static List<PayOSTransactionReportResponse> convertJsonToList(String json) {
+    private static List<PayOSTransactionResponse> convertJsonToList(String json) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.readValue(json, new TypeReference<List<PayOSTransactionReportResponse>>() {});
+            return objectMapper.readValue(json, new TypeReference<List<PayOSTransactionResponse>>() {});
         } catch (Exception e) {
             e.printStackTrace();
         }
