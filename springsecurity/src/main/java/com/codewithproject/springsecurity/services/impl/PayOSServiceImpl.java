@@ -4,6 +4,8 @@ import com.codewithproject.springsecurity.dto.ResponseDto;
 import com.codewithproject.springsecurity.dto.response.PayOSPaymentResponse;
 import com.codewithproject.springsecurity.dto.response.PayOSTransactionResponse;
 import com.codewithproject.springsecurity.dto.response.ThirdPartyAuthResponse;
+import com.codewithproject.springsecurity.entities.Payment;
+import com.codewithproject.springsecurity.repository.PaymentRepository;
 import com.codewithproject.springsecurity.util.ApiUtil;
 import com.codewithproject.springsecurity.util.ArrayUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -12,14 +14,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONObject;
 import org.apache.commons.codec.digest.HmacUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PayOSServiceImpl {
+
+    @Autowired
+    private PaymentRepository repoPayment;
 
     static String checksumKey = "f6fae8d97646ae861ea092322566e7028ee784df20812e5a0a8b3669f268591a";
 
@@ -131,6 +138,21 @@ public class PayOSServiceImpl {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<PayOSPaymentResponse> paymentListReport() {
+        List<PayOSPaymentResponse> payosResponse = new ArrayList<>();
+        List<Payment> listPayment = repoPayment.getListPayment();
+        if (!listPayment.isEmpty()) {
+            payosResponse = listPayment.stream().map(p -> {
+                PayOSPaymentResponse dto = new PayOSPaymentResponse();
+                dto.setId(p.getId());
+                dto.setAmount(p.getAmount());
+                dto.setStatus(p.getStatus());
+                return dto;
+            }).collect(Collectors.toList());
+        }
+        return payosResponse;
     }
 
     public PayOSPaymentResponse paymentReport(String id) {

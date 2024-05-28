@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
@@ -26,13 +29,23 @@ public class PayOSController {
         return response;
     }
 
-    @GetMapping("/public/payos/transaction-report")
-    public PayOSTransactionResponse payosTransactionReport() {
+    @GetMapping("/public/payos/transaction-report/list")
+    public PayOSTransactionResponse payosListTransactionReport() {
         PayOSTransactionResponse result = new PayOSTransactionResponse();
         ThirdPartyAuthResponse response = payOSServiceImpl.login();
         if (!response.getToken().isEmpty()) {
             result = payOSServiceImpl.transactionReport(response.getToken());
         }
+        return result;
+    }
+
+    @GetMapping("/public/payos/payment-report/list")
+    public List<PayOSPaymentResponse> payosListPaymentReport() {
+        List<PayOSPaymentResponse> result = new ArrayList<>();
+//        ThirdPartyAuthResponse response = payOSServiceImpl.login();
+//        if (!response.getToken().isEmpty()) {
+        result = payOSServiceImpl.paymentListReport();
+//        }
         return result;
     }
 
