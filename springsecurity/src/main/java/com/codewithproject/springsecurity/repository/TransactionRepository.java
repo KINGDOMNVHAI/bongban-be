@@ -18,5 +18,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     @Query(value = "SELECT t.* "
             + " FROM tb_bb_transaction t "
             + " WHERE t.reference LIKE :id ", nativeQuery = true)
-    List<Transaction> getListTransactionById(@Param("bladeCD") String id);
+    List<Transaction> getListTransactionById(@Param("id") String id);
 }

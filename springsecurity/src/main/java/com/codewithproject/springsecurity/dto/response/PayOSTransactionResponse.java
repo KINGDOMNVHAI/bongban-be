@@ -11,9 +11,11 @@ public class PayOSTransactionResponse {
 
     private String reference;
 
-    private Integer amount; // Số tiền thanh toán
+    private int orderCode; // Mã đơn hàng thanh toán (id của Payment)
 
-    private Integer accountNumber;
+    private int amount; // Số tiền thanh toán
+
+    private int accountNumber;
 
     private String description;
 

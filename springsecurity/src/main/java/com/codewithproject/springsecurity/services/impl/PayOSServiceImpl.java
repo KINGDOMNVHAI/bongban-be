@@ -1,25 +1,32 @@
 package com.codewithproject.springsecurity.services.impl;
 
 import com.codewithproject.springsecurity.dto.ResponseDto;
+import com.codewithproject.springsecurity.dto.request.PayOSCreatePaymentRequest;
 import com.codewithproject.springsecurity.dto.response.PayOSPaymentResponse;
 import com.codewithproject.springsecurity.dto.response.PayOSTransactionResponse;
 import com.codewithproject.springsecurity.dto.response.ThirdPartyAuthResponse;
 import com.codewithproject.springsecurity.entities.Payment;
 import com.codewithproject.springsecurity.repository.PaymentRepository;
+import com.codewithproject.springsecurity.repository.TransactionRepository;
 import com.codewithproject.springsecurity.util.ApiUtil;
 import com.codewithproject.springsecurity.util.ArrayUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.json.JSONObject;
 import org.apache.commons.codec.digest.HmacUtils;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +35,13 @@ public class PayOSServiceImpl {
     @Autowired
     private PaymentRepository repoPayment;
 
-    static String checksumKey = "f6fae8d97646ae861ea092322566e7028ee784df20812e5a0a8b3669f268591a";
+    @Autowired
+    private TransactionRepository repoTransaction;
+
+    static String clientID = "a8882de3-0fa0-4645-b557-bfc870990f2c";
+    static String apiKey = "ff0703c5-b92a-4c8d-bacc-f738f3c88ea8";
+    static String checksumKey = "156410ddd340172ed963556faec4bf08c09ebaa22098ea8e79a1cbdea27e0422";
+    static String reqSignature = "amount=$amount&cancelUrl=$cancelUrl&description=$description&orderCode=$orderCode&returnUrl=$returnUrl";
 
     static String transaction = "{\n" +
             "  \"orderCode\":123,\n" +
@@ -146,14 +159,62 @@ public class PayOSServiceImpl {
         if (!listPayment.isEmpty()) {
             payosResponse = listPayment.stream().map(p -> {
                 PayOSPaymentResponse dto = new PayOSPaymentResponse();
-                dto.setId(p.getId());
+//                dto.setId(p.getId());
+//                dto.setIdPayment(p.getIdPayment());
+//                dto.setPlatform(p.getPlatform());
+                dto.setDescription(p.getDescription());
                 dto.setAmount(p.getAmount());
-                dto.setStatus(p.getStatus());
+//                dto.setAmountPaid(p.getAmountPaid());
+//                dto.setAmountRemaining(p.getAmountRemaining());
+//                dto.setStatus(p.getStatus());
+
+                PayOSTransactionResponse trans = new PayOSTransactionResponse();
+//                dto.setTransactions(trans);
                 return dto;
             }).collect(Collectors.toList());
         }
         return payosResponse;
     }
+
+    public PayOSPaymentResponse paymentRequest(PayOSCreatePaymentRequest req) {
+        PayOSPaymentResponse payosResponse = new PayOSPaymentResponse();
+
+        // Create transaction string
+        String transStr = createTransactionStr(req.getAmount(), req.getCancelUrl(), req.getDescription()
+                , req.getOrderCode(), req.getReturnUrl());
+        System.out.println(transStr);
+
+        String signature = new HmacUtils("HmacSHA256", checksumKey).hmacHex(transStr);
+        System.out.println(signature);
+
+        payosResponse.setCurrency("VND");
+        payosResponse.setSignature(signature);
+        return payosResponse;
+    }
+
+    private String createTransactionStr(int amount, String cancelUrl, String description, int orderCode, String returnUrl) {
+//        amount=$amount&cancelUrl=$cancelUrl&description=$description&orderCode=$orderCode&returnUrl=$returnUrl
+        StringBuilder transactionStr = new StringBuilder();
+        transactionStr.append("amount=");
+        transactionStr.append(amount);
+        transactionStr.append("&cancelUrl=");
+        transactionStr.append(cancelUrl);
+        transactionStr.append("&description=");
+        transactionStr.append(description);
+        transactionStr.append("&orderCode=");
+        transactionStr.append(orderCode);
+        transactionStr.append("&returnUrl=");
+        transactionStr.append(returnUrl);
+        return transactionStr.toString();
+    }
+
+
+
+
+
+
+
+
 
     public PayOSPaymentResponse paymentReport(String id) {
         PayOSPaymentResponse payosResponse = new PayOSPaymentResponse();

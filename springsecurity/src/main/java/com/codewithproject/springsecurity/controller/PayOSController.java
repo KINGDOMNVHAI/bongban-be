@@ -1,5 +1,6 @@
 package com.codewithproject.springsecurity.controller;
 
+import com.codewithproject.springsecurity.dto.request.PayOSCreatePaymentRequest;
 import com.codewithproject.springsecurity.dto.response.PayOSPaymentResponse;
 import com.codewithproject.springsecurity.dto.response.PayOSTransactionResponse;
 import com.codewithproject.springsecurity.dto.response.ThirdPartyAuthResponse;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,6 +41,20 @@ public class PayOSController {
         }
         return result;
     }
+
+    @PostMapping("/public/payos/payment-request")
+    public PayOSPaymentResponse payosPaymentRequest(@RequestBody PayOSCreatePaymentRequest req) {
+        PayOSPaymentResponse result = new PayOSPaymentResponse();
+//        ThirdPartyAuthResponse response = payOSServiceImpl.login();
+//        if (!response.getToken().isEmpty()) {
+        result = payOSServiceImpl.paymentRequest(req);
+//        }
+        return result;
+    }
+
+
+
+
 
     @GetMapping("/public/payos/payment-report/list")
     public List<PayOSPaymentResponse> payosListPaymentReport() {
