@@ -81,6 +81,28 @@ public class ApiUtil {
         return responseEntity;
     }
 
+    public static ResponseEntity<String> callPostApiHaveBodyAuthor(String authorizationHeader, String requestBody, String url) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", authorizationHeader);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                requestEntity,
+                String.class
+        );
+    }
+
+
+
+
+
+
     public static <T> T mapToDTO(ResponseEntity<String> responseEntity, Class<T> clazz) {
         Gson gson = new Gson();
         return gson.fromJson(responseEntity.getBody(), clazz);

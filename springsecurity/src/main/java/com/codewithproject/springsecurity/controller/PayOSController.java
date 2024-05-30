@@ -5,12 +5,15 @@ import com.codewithproject.springsecurity.dto.response.PayOSPaymentResponse;
 import com.codewithproject.springsecurity.dto.response.PayOSTransactionResponse;
 import com.codewithproject.springsecurity.dto.response.ThirdPartyAuthResponse;
 import com.codewithproject.springsecurity.services.impl.PayOSServiceImpl;
+import com.codewithproject.springsecurity.util.ApiUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,11 +46,15 @@ public class PayOSController {
     }
 
     @PostMapping("/public/payos/payment-request")
-    public PayOSPaymentResponse payosPaymentRequest(@RequestBody PayOSCreatePaymentRequest req) {
+    public PayOSPaymentResponse payosPaymentRequest(
+            @RequestHeader("Authorization") String authorizationHeader
+            , @RequestBody PayOSCreatePaymentRequest req
+    ) {
         PayOSPaymentResponse result = new PayOSPaymentResponse();
+
 //        ThirdPartyAuthResponse response = payOSServiceImpl.login();
 //        if (!response.getToken().isEmpty()) {
-        result = payOSServiceImpl.paymentRequest(req);
+        result = payOSServiceImpl.paymentRequest(req, authorizationHeader);
 //        }
         return result;
     }

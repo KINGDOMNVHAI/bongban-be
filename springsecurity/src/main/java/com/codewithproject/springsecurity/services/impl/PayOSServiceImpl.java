@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -176,17 +177,60 @@ public class PayOSServiceImpl {
         return payosResponse;
     }
 
-    public PayOSPaymentResponse paymentRequest(PayOSCreatePaymentRequest req) {
+    public PayOSPaymentResponse paymentRequest(PayOSCreatePaymentRequest req, String authorizationHeader) {
         PayOSPaymentResponse payosResponse = new PayOSPaymentResponse();
+        // Create an instance of RestTemplate
+        RestTemplate restTemplate = new RestTemplate();
 
         // Create transaction string
         String transStr = createTransactionStr(req.getAmount(), req.getCancelUrl(), req.getDescription()
                 , req.getOrderCode(), req.getReturnUrl());
         System.out.println(transStr);
 
+        // Create signature
         String signature = new HmacUtils("HmacSHA256", checksumKey).hmacHex(transStr);
         System.out.println(signature);
 
+        // Set the request URL and create the request body
+        String url = "https://api-merchant.payos.vn/v2/payment-requests?x-client-id=" + clientID + "&x-api-key=" + apiKey;
+        String reqBody = "{\n" +
+                "  \"orderCode\": 11,\n" +
+                "  \"amount\": 3000,\n" +
+                "  \"description\": " + req.getDescription() + ",\n" +
+                "  \"buyerName\": \"Nguyen Van A\",\n" +
+                "  \"buyerEmail\": \"buyer-email@gmail.com\",\n" +
+                "  \"buyerPhone\": \"090xxxxxxx\",\n" +
+                "  \"buyerAddress\": \"số nhà, đường, phường, tỉnh hoặc thành phố\",\n" +
+                "  \"items\": [\n" +
+                "    {\n" +
+                "      \"name\": \"Vot bong ban \",\n" +
+                "      \"quantity\": 1,\n" +
+                "      \"price\": 3000000\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"cancelUrl\": \"abc\",\n" +
+                "  \"returnUrl\": \"abc\",\n" +
+                "  \"signature\": " + signature + "\n" +
+                "}";
+
+
+
+        ResponseEntity<String> response = ApiUtil.callPostApiHaveBodyAuthor(authorizationHeader, reqBody, url);
+
+//        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+//            System.out.println("Done");
+//        }
+
+
+
+
+        // Make the POST request
+//        String jsonString = restTemplate.postForObject(url, reqBody, String.class);
+        System.out.println(response);
+
+        payosResponse.setAmount(req.getAmount());
+        payosResponse.setDescription(req.getDescription());
+        payosResponse.setOrderCode(req.getOrderCode());
         payosResponse.setCurrency("VND");
         payosResponse.setSignature(signature);
         return payosResponse;
