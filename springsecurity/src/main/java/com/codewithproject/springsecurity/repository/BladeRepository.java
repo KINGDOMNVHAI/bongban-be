@@ -46,6 +46,6 @@ public interface BladeRepository extends JpaRepository<Blade, Long> {
             ", bu.inspect_percent" +
             " FROM tb_bb_blade b, tb_bb_blade_unit bu " +
             " WHERE b.blade_cd LIKE bu.blade_cd " +
-            " AND b.blade_cd LIKE :bladeCD", nativeQuery = true)
-    List<Object[]> getListByBladeCD(@Param("bladeCD") String bladeCD);
+            " AND bu.unit_id LIKE :unitID", nativeQuery = true)
+    List<Object[]> getBladeByUnitID(@Param("unitID") String unitID);
 }

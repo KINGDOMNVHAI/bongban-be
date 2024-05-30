@@ -72,15 +72,22 @@ public class BladeServiceImpl implements BladeService {
         return resultItemDtoList;
     }
 
-    public List<BladeDto> getListByBladeCD(String bladeCD) {
+    public List<BladeDto> getBladeByUnitID(String bladeCD) {
         List<BladeDto> resultItemDtoList = new ArrayList<>();
-        List<Object[]> resultList = bladeRepo.getListByBladeCD(bladeCD);
+        List<Object[]> resultList = bladeRepo.getBladeByUnitID(bladeCD);
         for (Object[] object : resultList) {
             BladeDto resultItemDto = new BladeDto();
             resultItemDtoList.add(resultItemDto.convertObjectToDto(object));
         }
         return resultItemDtoList;
     }
+
+//    public BladeDto getBladeByUnitID(String unitID) {
+//        BladeDto result = new BladeDto();
+//        Object[] obj = bladeRepo.getBladeByBladeCD(unitID);
+//        result.convertObjectToDto(obj);
+//        return result;
+//    }
 
     // Insert Blade, Line, Line Progress
     public Map<String,Object> insertBladeLine(InsertBladeLineRequest req) {

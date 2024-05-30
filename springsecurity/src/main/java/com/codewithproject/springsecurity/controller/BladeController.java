@@ -35,9 +35,14 @@ public class BladeController {
         return bladeServiceImpl.searchListBlade(req);
     }
 
-    @GetMapping("/public/blade/list-blade/{bladeCD}")
-    public List<BladeDto> getListByBladeCD(@PathVariable String bladeCD) {
-        return bladeServiceImpl.getListByBladeCD(bladeCD);
+//    @GetMapping("/public/blade/list-blade/{bladeCD}")
+//    public List<BladeDto> getListByBladeCD(@PathVariable String bladeCD) {
+//        return bladeServiceImpl.getListByBladeCD(bladeCD);
+//    }
+
+    @GetMapping("/public/blade/detail/{unitID}")
+    public List<BladeDto> getBladeByUnitID(@PathVariable String unitID) {
+        return bladeServiceImpl.getBladeByUnitID(unitID);
     }
 
     @PostMapping("/public/blade/insert")
