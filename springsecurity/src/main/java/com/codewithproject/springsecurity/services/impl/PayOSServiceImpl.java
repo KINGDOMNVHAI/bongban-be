@@ -2,10 +2,13 @@ package com.codewithproject.springsecurity.services.impl;
 
 import com.codewithproject.springsecurity.dto.ResponseDto;
 import com.codewithproject.springsecurity.dto.request.PayOSCreatePaymentRequest;
+import com.codewithproject.springsecurity.dto.response.MomoTransactionReportResponse;
 import com.codewithproject.springsecurity.dto.response.PayOSPaymentResponse;
 import com.codewithproject.springsecurity.dto.response.PayOSTransactionResponse;
 import com.codewithproject.springsecurity.dto.response.ThirdPartyAuthResponse;
 import com.codewithproject.springsecurity.entities.Payment;
+import com.codewithproject.springsecurity.enums.PaymentPlatform;
+import com.codewithproject.springsecurity.enums.StatusPayment;
 import com.codewithproject.springsecurity.repository.PaymentRepository;
 import com.codewithproject.springsecurity.repository.TransactionRepository;
 import com.codewithproject.springsecurity.util.ApiUtil;
@@ -200,8 +203,8 @@ public class PayOSServiceImpl {
         // Set the request URL and create the request body
         String url = "https://api-merchant.payos.vn/v2/payment-requests";
         String reqBody = "{\n" +
-                "  \"orderCode\": 12,\n" +
-                "  \"amount\": 200000,\n" +
+                "  \"orderCode\": " + req.getOrderCode() +  ",\n" +
+                "  \"amount\": " + req.getAmount() +  ",\n" +
                 "  \"description\": \"" + req.getDescription() + "\",\n" +
                 "  \"buyerName\": \"Nguyen Van A\",\n" +
                 "  \"buyerEmail\": \"buyer-email@gmail.com\",\n" +
@@ -214,14 +217,10 @@ public class PayOSServiceImpl {
                 "      \"price\": 3000000\n" +
                 "    }\n" +
                 "  ],\n" +
-                "  \"cancelUrl\": \"abc\",\n" +
-                "  \"returnUrl\": \"abc\",\n" +
-                "  \"signature\": \"" + signature + "\",\n" +
+                "  \"cancelUrl\": \"" + req.getCancelUrl() + "\",\n" +
+                "  \"returnUrl\": \"" + req.getReturnUrl() + "\",\n" +
+                "  \"signature\": \"" + signature + "\"\n" +
                 "}";
-
-
-
-
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -229,34 +228,56 @@ public class PayOSServiceImpl {
         headers.set("x-api-key", apiKey);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(reqBody, headers);
-
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+//        String responseBody = responseEntity.getBody();
+//        System.out.println(responseBody);
 
-        String responseBody = responseEntity.getBody();
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            // Get data
+            ResponseDto dataDto = ApiUtil.mapToDTO(responseEntity, ResponseDto.class);
+            System.out.println(dataDto);
+            Map<String,Object> dataMap = dataDto.getData();
+
+            // Insert to Payment table
+            Payment p = new Payment();
+            p.setIdPayment(dataMap.get("bin").toString());
+            p.setPlatform(PaymentPlatform.PAYOS.getPlf());
+            p.setAccountNumber(dataMap.get("accountNumber").toString());
+            p.setAccountName(dataMap.get("accountName").toString());
+            p.setDescription(dataMap.get("description").toString());
+            p.setOrderCode(dataMap.get("orderCode").toString());
+            p.setPaymentLinkId(dataMap.get("paymentLinkId").toString());
+            p.setStatus(StatusPayment.PENDING.getStatus());
+            p.setAmount((Double) dataMap.get("amount"));
+            p.setCurrency(dataMap.get("currency").toString());
+            p.setCheckoutUrl(dataMap.get("checkoutUrl").toString());
+            p.setQrCode(dataMap.get("qrCode").toString());
+            p.setSignature(dataDto.getSignature());
+            repoPayment.save(p);
+
+            // Convert map to PayOSPaymentResponse
+            payosResponse.setBin(dataMap.get("bin").toString());
+            payosResponse.setAccountNumber(dataMap.get("accountNumber").toString());
+            payosResponse.setAccountName(dataMap.get("accountName").toString());
+            payosResponse.setAmount((Double) dataMap.get("amount"));
+            payosResponse.setDescription(dataMap.get("description").toString());
+            payosResponse.setOrderCode(dataMap.get("orderCode").toString());
+            payosResponse.setCurrency(dataMap.get("currency").toString());
+            payosResponse.setPaymentLinkId(dataMap.get("paymentLinkId").toString());
+            payosResponse.setStatus(dataMap.get("status").toString());
+            payosResponse.setCheckoutUrl(dataMap.get("checkoutUrl").toString());
+            payosResponse.setQrCode(dataMap.get("qrCode").toString());
+            payosResponse.setSignature(dataDto.getSignature());
+        }
 
         // Process the response body as needed
-        System.out.println(responseBody);
+// {"code":"00","desc":"success","data":{"bin":"970422","accountNumber":"VQRQ0001ui3na","accountName":"CT TNHH CN TD THONG MINH","amount":200000,
+// "description":"abc","orderCode":12,"currency":"VND","paymentLinkId":"02df705b025c485f9775abc7e47c2853","status":"PENDING","checkoutUrl":"https://pay.payos.vn/web/02df705b025c485f9775abc7e47c2853","qrCode":"00020101021238570010A000000727012700069704220113VQRQ0001ui3na0208QRIBFTTA530370454062000005802VN62070803abc630435B2"},"signature":"c97ee94bf441dde947c4f8c69ebb9cef88e783587b63c5c1f2272c2899ae93ac"}
 
 
 
 
 
-//        if (responseEntity.getStatusCode().is2xxSuccessful()) {
-//            System.out.println("Done");
-//        }
-
-
-
-
-        // Make the POST request
-//        String jsonString = restTemplate.postForObject(url, reqBody, String.class);
-//        System.out.println(response);
-
-        payosResponse.setAmount(req.getAmount());
-        payosResponse.setDescription(req.getDescription());
-        payosResponse.setOrderCode(req.getOrderCode());
-        payosResponse.setCurrency("VND");
-        payosResponse.setSignature(signature);
         return payosResponse;
     }
 

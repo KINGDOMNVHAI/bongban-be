@@ -15,4 +15,5 @@ public class ResponseDto {
     // PayOS
     private String code;
     private String desc;
+    private String signature;
 }

@@ -33,11 +33,11 @@ public class PayOSPaymentResponse {
 
     private String accountName; // Tên tài khoản ngân hàng
 
-    private Integer amount; // Số tiền thanh toán
+    private Double amount; // Số tiền thanh toán
 
     private String description; // Mô tả thanh toán
 
-    private int orderCode; // Mã đơn hàng thanh toán (id của Payment)
+    private String orderCode; // Mã đơn hàng thanh toán (id của Payment)
 
     private String currency; // Đơn vị tiền tệ
 
