@@ -13,8 +13,6 @@ public class PayOSPaymentResponse {
 //
 //    private String idPayment; // id của nền tảng thanh toán
 //
-//    private String platform; // code nền tảng thanh toán
-//
 //    private Integer amountPaid; // Số tiền thanh toán
 //
 //    private Integer amountRemaining; // Số tiền thanh toán
@@ -28,6 +26,8 @@ public class PayOSPaymentResponse {
 //    private Date canceledAt;
 
     private String bin;
+
+    private String platform; // code nền tảng thanh toán
 
     private String accountNumber; // Số tài khoản ngân hàng thụ hưởng, là số tài khoản ảo nếu Cổng thanh toán liên kết với VietQR PRO
 

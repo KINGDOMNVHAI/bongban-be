@@ -1,31 +1,18 @@
 package com.codewithproject.springsecurity.services.impl;
 
-import com.codewithproject.springsecurity.dto.ResponseContentDto;
 import com.codewithproject.springsecurity.dto.ResponseDto;
 import com.codewithproject.springsecurity.dto.response.MomoTransactionReportResponse;
 import com.codewithproject.springsecurity.util.ApiUtil;
 import com.codewithproject.springsecurity.util.ArrayUtil;
-import com.codewithproject.springsecurity.util.JSonUtil;
-import com.google.gson.reflect.TypeToken;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import com.fasterxml.jackson.core.type.TypeReference;
 
-import java.lang.reflect.Type;
-import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
