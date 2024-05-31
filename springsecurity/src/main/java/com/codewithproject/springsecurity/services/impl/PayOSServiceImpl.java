@@ -17,6 +17,10 @@ import com.google.gson.GsonBuilder;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -43,6 +47,8 @@ public class PayOSServiceImpl {
     static String apiKey = "ff0703c5-b92a-4c8d-bacc-f738f3c88ea8";
     static String checksumKey = "156410ddd340172ed963556faec4bf08c09ebaa22098ea8e79a1cbdea27e0422";
     static String reqSignature = "amount=$amount&cancelUrl=$cancelUrl&description=$description&orderCode=$orderCode&returnUrl=$returnUrl";
+
+    static String resultSHA256 = "d92193519d009d904aed59866b5c68fe4b7439f273f815a57d778e380c36f8d8";
 
     static String transaction = "{\n" +
             "  \"orderCode\":123,\n" +
@@ -177,7 +183,7 @@ public class PayOSServiceImpl {
         return payosResponse;
     }
 
-    public PayOSPaymentResponse paymentRequest(PayOSCreatePaymentRequest req, String authorizationHeader) {
+    public PayOSPaymentResponse paymentRequest(PayOSCreatePaymentRequest req) {
         PayOSPaymentResponse payosResponse = new PayOSPaymentResponse();
         // Create an instance of RestTemplate
         RestTemplate restTemplate = new RestTemplate();
@@ -189,14 +195,14 @@ public class PayOSServiceImpl {
 
         // Create signature
         String signature = new HmacUtils("HmacSHA256", checksumKey).hmacHex(transStr);
-        System.out.println(signature);
+        System.out.println(signature.equals(resultSHA256));
 
         // Set the request URL and create the request body
-        String url = "https://api-merchant.payos.vn/v2/payment-requests?x-client-id=" + clientID + "&x-api-key=" + apiKey;
+        String url = "https://api-merchant.payos.vn/v2/payment-requests";
         String reqBody = "{\n" +
-                "  \"orderCode\": 11,\n" +
-                "  \"amount\": 3000,\n" +
-                "  \"description\": " + req.getDescription() + ",\n" +
+                "  \"orderCode\": 12,\n" +
+                "  \"amount\": 200000,\n" +
+                "  \"description\": \"" + req.getDescription() + "\",\n" +
                 "  \"buyerName\": \"Nguyen Van A\",\n" +
                 "  \"buyerEmail\": \"buyer-email@gmail.com\",\n" +
                 "  \"buyerPhone\": \"090xxxxxxx\",\n" +
@@ -210,12 +216,30 @@ public class PayOSServiceImpl {
                 "  ],\n" +
                 "  \"cancelUrl\": \"abc\",\n" +
                 "  \"returnUrl\": \"abc\",\n" +
-                "  \"signature\": " + signature + "\n" +
+                "  \"signature\": \"" + signature + "\",\n" +
                 "}";
 
 
 
-        ResponseEntity<String> response = ApiUtil.callPostApiHaveBodyAuthor(authorizationHeader, reqBody, url);
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("x-client-id", clientID);
+        headers.set("x-api-key", apiKey);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(reqBody, headers);
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+
+        String responseBody = responseEntity.getBody();
+
+        // Process the response body as needed
+        System.out.println(responseBody);
+
+
+
+
 
 //        if (responseEntity.getStatusCode().is2xxSuccessful()) {
 //            System.out.println("Done");
@@ -226,7 +250,7 @@ public class PayOSServiceImpl {
 
         // Make the POST request
 //        String jsonString = restTemplate.postForObject(url, reqBody, String.class);
-        System.out.println(response);
+//        System.out.println(response);
 
         payosResponse.setAmount(req.getAmount());
         payosResponse.setDescription(req.getDescription());

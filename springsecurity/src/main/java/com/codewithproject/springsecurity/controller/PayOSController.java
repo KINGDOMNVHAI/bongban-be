@@ -8,6 +8,7 @@ import com.codewithproject.springsecurity.services.impl.PayOSServiceImpl;
 import com.codewithproject.springsecurity.util.ApiUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,16 +48,17 @@ public class PayOSController {
 
     @PostMapping("/public/payos/payment-request")
     public PayOSPaymentResponse payosPaymentRequest(
-            @RequestHeader("Authorization") String authorizationHeader
-            , @RequestBody PayOSCreatePaymentRequest req
+            @RequestBody PayOSCreatePaymentRequest req
     ) {
         PayOSPaymentResponse result = new PayOSPaymentResponse();
 
 //        ThirdPartyAuthResponse response = payOSServiceImpl.login();
 //        if (!response.getToken().isEmpty()) {
-        result = payOSServiceImpl.paymentRequest(req, authorizationHeader);
+        result = payOSServiceImpl.paymentRequest(req);
 //        }
         return result;
+
+        // Error: "{"code":"503","desc":"Hệ thống đang bị gián đoạn. Xin lỗi vì sự bất tiện này."}"
     }
 
 
