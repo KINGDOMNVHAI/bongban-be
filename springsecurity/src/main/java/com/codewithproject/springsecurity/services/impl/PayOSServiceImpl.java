@@ -12,6 +12,7 @@ import com.codewithproject.springsecurity.repository.PaymentRepository;
 import com.codewithproject.springsecurity.repository.TransactionRepository;
 import com.codewithproject.springsecurity.util.ApiUtil;
 import com.codewithproject.springsecurity.util.ArrayUtil;
+import com.codewithproject.springsecurity.util.JSonUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -119,14 +120,13 @@ public class PayOSServiceImpl {
         if (!listPayment.isEmpty()) {
             payosResponse = listPayment.stream().map(p -> {
                 PayOSPaymentResponse dto = new PayOSPaymentResponse();
-//                dto.setId(p.getId());
-//                dto.setIdPayment(p.getIdPayment());
-//                dto.setPlatform(p.getPlatform());
+                dto.setPlatform(p.getPlatform());
                 dto.setDescription(p.getDescription());
                 dto.setAmount(p.getAmount());
-//                dto.setAmountPaid(p.getAmountPaid());
-//                dto.setAmountRemaining(p.getAmountRemaining());
-//                dto.setStatus(p.getStatus());
+                dto.setCurrency(p.getCurrency());
+                dto.setStatus(JSonUtil.getStrStatus(p.getStatus()));
+                dto.setQrCode(p.getQrCode());
+                dto.setSignature(p.getSignature());
 
                 PayOSTransactionResponse trans = new PayOSTransactionResponse();
 //                dto.setTransactions(trans);
@@ -215,7 +215,6 @@ public class PayOSServiceImpl {
             payosResponse.setQrCode(dataMap.get("qrCode").toString());
             payosResponse.setSignature(dataDto.getSignature());
         }
-
         return payosResponse;
     }
 

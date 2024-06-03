@@ -1,14 +1,12 @@
 package com.codewithproject.springsecurity.util;
 
-import com.codewithproject.springsecurity.dto.response.MomoTransactionReportResponse;
+import com.codewithproject.springsecurity.enums.StatusPayment;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.StringWriter;
-import java.util.List;
 
 public class JSonUtil {
 
@@ -32,7 +30,6 @@ public class JSonUtil {
             e.printStackTrace();
             return null;
         }
-
     }
 
     public static String obj2JSon(Object o) {
@@ -70,5 +67,19 @@ public class JSonUtil {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String getStrStatus(Integer status) {
+        String result = "NEW";
+        if (status.equals(StatusPayment.NEW.getStatus())) {
+            result = "NEW";
+        } else if (status.equals(StatusPayment.PENDING.getStatus())) {
+            result = "PENDING";
+        } else if (status.equals(StatusPayment.CANCELLED.getStatus())) {
+            result = "CANCELLED";
+        } else if (status.equals(StatusPayment.SUCCESS.getStatus())) {
+            result = "SUCCESS";
+        }
+        return result;
     }
 }
