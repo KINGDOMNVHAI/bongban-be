@@ -31,6 +31,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -132,6 +133,25 @@ public class PayOSServiceImpl {
 //                dto.setTransactions(trans);
                 return dto;
             }).collect(Collectors.toList());
+        }
+        return payosResponse;
+    }
+
+    public PayOSPaymentResponse paymentReport(Integer id) {
+        PayOSPaymentResponse payosResponse = new PayOSPaymentResponse();
+        Optional<Payment> pay = repoPayment.getListPaymentById(id);
+        if (pay.isPresent()) {
+            Payment p = pay.get();
+            payosResponse.setPlatform(p.getPlatform());
+            payosResponse.setDescription(p.getDescription());
+            payosResponse.setAmount(p.getAmount());
+            payosResponse.setCurrency(p.getCurrency());
+            payosResponse.setStatus(JSonUtil.getStrStatus(p.getStatus()));
+            payosResponse.setQrCode(p.getQrCode());
+            payosResponse.setSignature(p.getSignature());
+
+            PayOSTransactionResponse trans = new PayOSTransactionResponse();
+//                dto.setTransactions(trans);
         }
         return payosResponse;
     }
