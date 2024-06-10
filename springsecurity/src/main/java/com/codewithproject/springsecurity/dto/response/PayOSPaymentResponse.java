@@ -9,8 +9,8 @@ import java.util.Date;
 @Setter
 public class PayOSPaymentResponse {
 
-//    private Integer id;
-//
+    private Integer id;
+
 //    private String idPayment; // id của nền tảng thanh toán
 //
 //    private Integer amountPaid; // Số tiền thanh toán

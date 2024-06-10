@@ -121,9 +121,11 @@ public class PayOSServiceImpl {
         if (!listPayment.isEmpty()) {
             payosResponse = listPayment.stream().map(p -> {
                 PayOSPaymentResponse dto = new PayOSPaymentResponse();
+                dto.setId(p.getId());
                 dto.setPlatform(p.getPlatform());
                 dto.setDescription(p.getDescription());
                 dto.setAmount(p.getAmount());
+                dto.setOrderCode(p.getOrderCode());
                 dto.setCurrency(p.getCurrency());
                 dto.setStatus(JSonUtil.getStrStatus(p.getStatus()));
                 dto.setQrCode(p.getQrCode());
@@ -142,9 +144,11 @@ public class PayOSServiceImpl {
         Optional<Payment> pay = repoPayment.getListPaymentById(id);
         if (pay.isPresent()) {
             Payment p = pay.get();
+            payosResponse.setId(p.getId());
             payosResponse.setPlatform(p.getPlatform());
             payosResponse.setDescription(p.getDescription());
             payosResponse.setAmount(p.getAmount());
+            payosResponse.setOrderCode(p.getOrderCode());
             payosResponse.setCurrency(p.getCurrency());
             payosResponse.setStatus(JSonUtil.getStrStatus(p.getStatus()));
             payosResponse.setQrCode(p.getQrCode());
