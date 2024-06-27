@@ -46,7 +46,6 @@ public class JSonUtil {
             e.printStackTrace();
             return null;
         }
-
     }
 
     public static <T> T str2bean(String json, Class<T> clazz) {

@@ -5,6 +5,7 @@ import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
 import com.codewithproject.springsecurity.dto.request.SearchBladeRequest;
 import com.codewithproject.springsecurity.dto.response.BladeListResponse;
 import com.codewithproject.springsecurity.services.impl.BladeServiceImpl;
+import com.codewithproject.springsecurity.services.impl.FileServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,9 @@ public class BladeController {
 
     @Autowired
     private BladeServiceImpl bladeServiceImpl;
+
+    @Autowired
+    private FileServiceImpl fileServiceImpl;
 
     @GetMapping("/public/blade/list")
     public List<BladeListResponse> getListBrand() {
@@ -54,10 +59,17 @@ public class BladeController {
     }
 
     @PostMapping("/public/blade/upload-image")
-    public Map<String,Object> uploadImageBlade(@RequestParam("file") MultipartFile file) {
-        System.out.println(file);
+    public Map<String,Object> uploadImageBlade(@RequestParam MultipartFile[] files) throws IOException {
         Map<String,Object> result = new HashMap<>();
-        result.put("message", "upload image success");
+        String type = "img";
+        if (files == null) {
+            result.put("success", false);
+            result.put("message", "type or files is empty!!");
+            return result;
+        }
+        String message = fileServiceImpl.storeFile(type, files);
+
+        result.put("message", message);
         return result;
     }
 }
