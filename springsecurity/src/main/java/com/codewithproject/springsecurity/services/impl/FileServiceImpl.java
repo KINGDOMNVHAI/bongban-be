@@ -1,5 +1,7 @@
 package com.codewithproject.springsecurity.services.impl;
 
+import com.codewithproject.springsecurity.config.FileConstants;
+import com.codewithproject.springsecurity.config.MessageConstants;
 import com.codewithproject.springsecurity.repository.BladeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,12 +39,12 @@ public class FileServiceImpl {
                 // Copy the uploaded file to the target location
                 Files.copy(file.getInputStream(), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
             }
-
-
         }
 
+        if (uploadType.equals(FileConstants.FILE_TYPE_PDF)) {
+            System.out.println(uploadType);
+        }
 
-
-        return "File uploaded successfully";
+        return MessageConstants.MESS_FILE_UPLOAD_SUCCESS;
     }
 }

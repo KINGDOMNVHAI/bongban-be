@@ -1,5 +1,6 @@
 package com.codewithproject.springsecurity.controller;
 
+import com.codewithproject.springsecurity.config.MessageConstants;
 import com.codewithproject.springsecurity.dto.request.InsertBladeLineRequest;
 import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
 import com.codewithproject.springsecurity.dto.request.SearchBladeRequest;
@@ -64,7 +65,7 @@ public class BladeController {
         String type = "img";
         if (files == null) {
             result.put("success", false);
-            result.put("message", "type or files is empty!!");
+            result.put("message", MessageConstants.MESS_TYPE_OR_FILE_EMPTY);
             return result;
         }
         String message = fileServiceImpl.storeFile(type, files);

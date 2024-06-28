@@ -37,15 +37,15 @@ public interface BladeRepository extends JpaRepository<Blade, Long> {
     @Query(value = "SELECT b.seq" +
             ", b.brand_cd" +
             ", b.brand_name" +
-            ", b.blade_name" +
             ", b.blade_cd" +
+            ", b.blade_name" +
             ", b.blade_full_name" +
+            ", bu.unit_id" +
             ", b.sub_branch" +
             ", b.paddle_tp" +
-            ", bu.unit_id" +
             ", bu.inspect_percent" +
             " FROM tb_bb_blade b, tb_bb_blade_unit bu " +
-            " WHERE b.blade_cd LIKE bu.blade_cd " +
-            " AND bu.unit_id LIKE :unitID", nativeQuery = true)
+            " WHERE b.blade_cd LIKE bu.blade_cd "
+            + " AND bu.unit_id LIKE :unitID ", nativeQuery = true)
     List<Object[]> getBladeByUnitID(@Param("unitID") String unitID);
 }

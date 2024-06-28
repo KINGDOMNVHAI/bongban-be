@@ -20,6 +20,7 @@ public class BladeListResponse {
     private String bladeCD;
     private String bladeName;
     private String bladeFullName;
+    private String unitID;
 
     // tb_bb_line
     private String period;
@@ -41,6 +42,7 @@ public class BladeListResponse {
         dto.setBladeCD((String) object[3]);
         dto.setBladeName((String) object[4]);
         dto.setBladeFullName((String) object[5]);
+        dto.setUnitID((String) object[6]);
         dto.setPeriod((String) object[9]);
         dto.setPeriodCnt((Integer) object[10]);
         dto.setInitPrice((Integer) object[11]);
