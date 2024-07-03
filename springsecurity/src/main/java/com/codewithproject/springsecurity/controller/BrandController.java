@@ -1,21 +1,19 @@
 package com.codewithproject.springsecurity.controller;
 
 import com.codewithproject.springsecurity.dto.entitydto.BrandDto;
-import com.codewithproject.springsecurity.model.ResponseModel;
+import com.codewithproject.springsecurity.dto.request.SearchBrandRequest;
+import com.codewithproject.springsecurity.dto.response.BrandListResponse;
 import com.codewithproject.springsecurity.services.impl.BrandServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.codewithproject.springsecurity.config.MessageConstants.*;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -40,5 +38,10 @@ public class BrandController {
             @PathVariable String brandCD
     ) {
         return brandServiceImpl.getListBrandCheckParent(true, brandCD);
+    }
+
+    @PostMapping("/public/brand/search")
+    public List<BrandListResponse> searchListBrand(@RequestBody SearchBrandRequest req) {
+        return brandServiceImpl.searchListBrand(req);
     }
 }

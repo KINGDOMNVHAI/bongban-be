@@ -1,12 +1,7 @@
 package com.codewithproject.springsecurity.dto.response;
 
-import com.codewithproject.springsecurity.config.Constants;
-import com.codewithproject.springsecurity.util.DateUtil;
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Getter
 @Setter

@@ -1,6 +1,10 @@
 package com.codewithproject.springsecurity.services.impl;
 
 import com.codewithproject.springsecurity.dto.entitydto.BrandDto;
+import com.codewithproject.springsecurity.dto.request.SearchBladeRequest;
+import com.codewithproject.springsecurity.dto.request.SearchBrandRequest;
+import com.codewithproject.springsecurity.dto.response.BladeListResponse;
+import com.codewithproject.springsecurity.dto.response.BrandListResponse;
 import com.codewithproject.springsecurity.entities.Brand;
 import com.codewithproject.springsecurity.repository.BrandRepository;
 import com.codewithproject.springsecurity.services.BrandService;
@@ -33,6 +37,12 @@ public class BrandServiceImpl implements BrandService {
         return result;
     }
 
+    public List<BrandListResponse> searchListBrand(SearchBrandRequest req) {
+        String brandCD = req.getBrandCD() != null ? req.getBrandCD() : "";
+        List<Object[]> resultList = brandRepo.searchListBrand(brandCD);
+        return setBrandListResponse(resultList);
+    }
+
     public List<BrandDto> getListBrandCheckParent(boolean hasParent, String brandCD) {
         List<BrandDto> result = new ArrayList<>();
         List<Brand> listBrand = new ArrayList<>();
@@ -53,5 +63,19 @@ public class BrandServiceImpl implements BrandService {
             }).collect(Collectors.toList());
         }
         return result;
+    }
+
+    private List<BrandListResponse> setBrandListResponse(List<Object[]> resultList) {
+        List<BrandListResponse> resultItemDtoList = new ArrayList<>();
+        if (!resultList.isEmpty()) {
+            for (Object[] object : resultList) {
+                BrandListResponse dto = new BrandListResponse();
+                dto = dto.convertObjectToDto(object);
+//                Integer count = lineServiceImpl.countByBladeCD(dto.getBladeCD());
+//                dto.setCountRegister(count);
+                resultItemDtoList.add(dto);
+            }
+        }
+        return resultItemDtoList;
     }
 }
