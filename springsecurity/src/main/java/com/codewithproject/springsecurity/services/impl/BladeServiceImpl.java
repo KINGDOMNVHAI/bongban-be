@@ -95,7 +95,7 @@ public class BladeServiceImpl implements BladeService {
 
         // Find brand
         String brandCd = req.getBrandCD();
-        Optional<Brand> brandOptional = brandRepo.getBrandDetail(brandCd);
+        Optional<Brand> brandOptional = brandRepo.getBrandByCode(brandCd);
 
         if (brandOptional.isEmpty()) {
             result.put(MAP_STATUS_CODE, 404);

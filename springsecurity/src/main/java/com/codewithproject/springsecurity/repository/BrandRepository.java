@@ -19,7 +19,7 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
     @Query(value = "SELECT b.* "
             + " FROM tb_bb_brand b "
             + " WHERE b.brand_cd = :brandCd ", nativeQuery = true)
-    Optional<Brand> getBrandDetail(@Param("brandCd") String brandCd);
+    Optional<Brand> getBrandByCode(@Param("brandCd") String brandCd);
 
     @Query(value = "SELECT b.* "
             + " FROM tb_bb_brand b "

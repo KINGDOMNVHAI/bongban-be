@@ -32,4 +32,7 @@ public class Brand {
 
     @Column(name = "parent")
     private String parent;
+
+    @Column(name = "thumbnail")
+    private String thumbnail;
 }

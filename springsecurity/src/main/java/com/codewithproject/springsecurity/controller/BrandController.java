@@ -1,5 +1,6 @@
 package com.codewithproject.springsecurity.controller;
 
+import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
 import com.codewithproject.springsecurity.dto.entitydto.BrandDto;
 import com.codewithproject.springsecurity.dto.request.SearchBrandRequest;
 import com.codewithproject.springsecurity.dto.response.BrandListResponse;
@@ -43,5 +44,10 @@ public class BrandController {
     @PostMapping("/public/brand/search")
     public List<BrandListResponse> searchListBrand(@RequestBody SearchBrandRequest req) {
         return brandServiceImpl.searchListBrand(req);
+    }
+
+    @GetMapping("/public/brand/detail/{brandCD}")
+    public BrandListResponse getBrandByCode(@PathVariable String brandCD) {
+        return brandServiceImpl.getBrandByCode(brandCD);
     }
 }

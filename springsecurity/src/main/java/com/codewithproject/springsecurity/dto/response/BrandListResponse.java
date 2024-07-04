@@ -11,7 +11,8 @@ public class BrandListResponse {
     private Integer seq;
     private String brandCD;
     private String brandName;
-    private String parent;
+    private String parentBrandCD;
+    private String parentBrandName;
     private String thumbnail;
 
     public BrandListResponse convertObjectToDto(Object[] object) {
@@ -19,7 +20,7 @@ public class BrandListResponse {
         dto.setSeq((Integer) object[0]);
         dto.setBrandCD((String) object[1]);
         dto.setBrandName((String) object[2]);
-        dto.setParent((String) object[3]);
+        dto.setParentBrandCD((String) object[3]);
         dto.setThumbnail((String) object[4]);
         return dto;
     }

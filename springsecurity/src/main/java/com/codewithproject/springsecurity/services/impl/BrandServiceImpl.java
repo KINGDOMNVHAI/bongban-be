@@ -1,5 +1,6 @@
 package com.codewithproject.springsecurity.services.impl;
 
+import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
 import com.codewithproject.springsecurity.dto.entitydto.BrandDto;
 import com.codewithproject.springsecurity.dto.request.SearchBladeRequest;
 import com.codewithproject.springsecurity.dto.request.SearchBrandRequest;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,5 +79,25 @@ public class BrandServiceImpl implements BrandService {
             }
         }
         return resultItemDtoList;
+    }
+
+    public BrandListResponse getBrandByCode(String brandCD) {
+        BrandListResponse result = new BrandListResponse();
+        Optional<Brand> brandDetail = brandRepo.getBrandByCode(brandCD);
+        if (brandDetail.isPresent()) {
+            Brand b = brandDetail.get();
+            result.setSeq(b.getSeq());
+            result.setBrandCD(b.getBrandCD());
+            result.setBrandName(b.getBrandName());
+            result.setParentBrandCD(b.getParent());
+            result.setThumbnail(b.getThumbnail());
+
+            Optional<Brand> brandParent = brandRepo.getBrandByCode(b.getParent());
+            if (brandParent.isPresent()) {
+                Brand bp = brandParent.get();
+                result.setParentBrandName(bp.getBrandName());
+            }
+        }
+        return result;
     }
 }
