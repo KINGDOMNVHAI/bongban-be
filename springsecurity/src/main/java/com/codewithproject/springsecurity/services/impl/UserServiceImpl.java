@@ -48,6 +48,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserDetail(String email) {
-        return userRepo.getUserByEmail(email);
+        return userRepo.getUserByEmailOrUsername(email);
     }
 }

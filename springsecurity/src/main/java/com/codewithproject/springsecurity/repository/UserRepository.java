@@ -24,8 +24,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT u.* "
             + " FROM tb_bb_user u "
-            + " WHERE u.email LIKE :usernameOrEmail", nativeQuery = true)
-    Optional<User> getUserByEmail(@Param("usernameOrEmail") String usernameOrEmail);
+            + " WHERE u.email LIKE :usernameOrEmail "
+            + " OR u.username LIKE :usernameOrEmail ", nativeQuery = true)
+    Optional<User> getUserByEmailOrUsername(@Param("usernameOrEmail") String usernameOrEmail);
 
     User findByRole(Role role);
 
