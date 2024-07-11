@@ -146,8 +146,70 @@ post-service: table post, category, post_category
 question-service: table test, question
 
 
+===
+Task:
+fix UserSeeder
+DB: pass bình thường
+Request gửi pass mã hóa.
+Lên Backend decode thành pass bình thường rồi so sánh.
+
+Sau đó làm nút đăng ký
+
+
+
 
 ============
 Cách fix Refresh Token:
 https://www.youtube.com/watch?v=EsVybSJr7zU
 https://github.com/ali-bouali/spring-boot-3-jwt-security
+
+Cách chạy file jar với Java 17
+Vào thư mục Java 17 bằng lệnh cd
+Ví dụ: cd Java\jdk-17\bin
+Sau đó dùng lệnh: java -jar C:\NVHAI\WORKSPACE\bongban-be\springsecurity\out\artifacts\springsecurity_jar\springsecurity.jar
+
+Nếu file jar không chạy được:
+1) Xóa target
+2) Kiểm tra maven
+
+Tắt tất cả task NGINX
+taskkill /IM "nginx.exe" /F
+
+
+
+Tạo file chạy cmd
+Tạo 2 file
+8888dns
+8888dns.ps1
+
+Example 7: Unblock a script to run it without changing the execution policy
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+
+
+
+
+
+
+
+http://103.101.162.142:7800
+
+Địa chỉ: http://103.101.162.142:7800
+Username: A0uZ05jAy3SHPS0j
+Password: I9ezmNlPk5Gm9h2D
+
+A/Back-end
+1.upload .jar file :
+/www/wwwroot/bongban-backend
+
+2. stop: kill current process
+
+sudo ss -lptn 'sport = :8080'
+kill [PID]
+
+3. start
+cd /www/wwwroot/bongban/build
+nohup javar -jar springsecurity.jar
+
+B/Front-end
+/www/wwwroot/bongban/build

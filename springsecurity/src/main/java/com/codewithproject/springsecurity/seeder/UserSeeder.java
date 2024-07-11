@@ -25,7 +25,7 @@ public class UserSeeder {
             admin1.setFirstname("Hai Admin");
             admin1.setEmail("nvhai061993@gmail.com");
             admin1.setUsername("admin1");
-            admin1.setPassword(new BCryptPasswordEncoder().encode("123456"));
+//            admin1.setPassword(new BCryptPasswordEncoder().encode("123456"));
             admin1.setRole(Role.ADMIN);
             userRepo.save(admin1);
             result.add(admin1);
@@ -45,7 +45,8 @@ public class UserSeeder {
             user2.setFirstname("An User");
             user2.setEmail("nvhai2306@gmail.com");
             user2.setUsername("user2");
-            user1.setPassword(new BCryptPasswordEncoder().encode("123456"));
+//            user2.setPassword(new BCryptPasswordEncoder().encode("123456"));
+            user2.setPassword("123456");
             user2.setRole(Role.USER);
             userRepo.save(user2);
             result.add(user2);
