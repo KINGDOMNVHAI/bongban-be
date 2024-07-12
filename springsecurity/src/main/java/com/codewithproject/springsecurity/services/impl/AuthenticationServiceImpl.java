@@ -51,18 +51,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public JwtAuthenticationResponse signin(SignInRequest signInRequest) {
         String pass = signInRequest.getPassword();
         String passHash = new BCryptPasswordEncoder().encode(pass);
-        System.out.println(passHash);
         String jwt = null;
         String refreshToken = null;
         String message = MessageConstants.MESS_INVALID_EMAIL_PASSWORD;
 
         Optional<User> user = userRepository.getUserByEmailOrUsername(signInRequest.getEmailOrUsername());
-        if (user.isPresent() && !passHash.isEmpty()) {
-//            if (user.get().getPassword().equals(pass)) {
+        if (user.isPresent() && !pass.isEmpty()) {
+            if (user.get().getPassword().equals(pass)) {
                 jwt = jwtService.generateToken(user.get());
                 refreshToken = jwtService.generateRefreshToken(new HashMap<>(), user.get());
                 message = MessageConstants.MESS_LOGIN_SUCCESS;
-//            }
+            }
         }
         JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse();
         jwtAuthenticationResponse.setToken(jwt);
@@ -74,6 +73,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     signInRequest.getEmailOrUsername(), passHash));
         } catch (Exception ex) {
             System.out.println("Error");
+            System.out.println(ex);
         }
         return jwtAuthenticationResponse;
     }

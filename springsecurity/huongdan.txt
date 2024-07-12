@@ -152,6 +152,7 @@ fix UserSeeder
 DB: pass bình thường
 Request gửi pass mã hóa.
 Lên Backend decode thành pass bình thường rồi so sánh.
+Fix error bad credentials
 
 Sau đó làm nút đăng ký
 

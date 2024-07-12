@@ -25,7 +25,7 @@ public class UserSeeder {
             admin1.setFirstname("Hai Admin");
             admin1.setEmail("nvhai061993@gmail.com");
             admin1.setUsername("admin1");
-//            admin1.setPassword(new BCryptPasswordEncoder().encode("123456"));
+            admin1.setPassword(new BCryptPasswordEncoder().encode("123456"));
             admin1.setRole(Role.ADMIN);
             userRepo.save(admin1);
             result.add(admin1);
