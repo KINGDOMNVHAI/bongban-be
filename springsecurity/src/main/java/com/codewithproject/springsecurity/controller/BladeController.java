@@ -3,6 +3,7 @@ package com.codewithproject.springsecurity.controller;
 import com.codewithproject.springsecurity.config.MessageConstants;
 import com.codewithproject.springsecurity.dto.request.InsertBladeLineRequest;
 import com.codewithproject.springsecurity.dto.entitydto.BladeDto;
+import com.codewithproject.springsecurity.dto.request.RegisterBladeRequest;
 import com.codewithproject.springsecurity.dto.request.SearchBladeRequest;
 import com.codewithproject.springsecurity.dto.response.BladeListResponse;
 import com.codewithproject.springsecurity.services.impl.BladeServiceImpl;
@@ -72,5 +73,10 @@ public class BladeController {
 
         result.put("message", message);
         return result;
+    }
+
+    @PostMapping("/public/blade/register")
+    public String registerBlade(@RequestBody RegisterBladeRequest req) {
+        return "blade/register";
     }
 }
