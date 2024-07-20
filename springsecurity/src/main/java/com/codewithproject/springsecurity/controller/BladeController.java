@@ -74,9 +74,4 @@ public class BladeController {
         result.put("message", message);
         return result;
     }
-
-    @PostMapping("/public/blade/register")
-    public String registerBlade(@RequestBody RegisterBladeRequest req) {
-        return "blade/register";
-    }
 }

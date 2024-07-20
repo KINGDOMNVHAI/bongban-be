@@ -1,7 +1,7 @@
 package com.codewithproject.springsecurity.services.impl;
 
-import com.codewithproject.springsecurity.dto.request.InsertLineRequest;
 import com.codewithproject.springsecurity.dto.entitydto.LineDto;
+import com.codewithproject.springsecurity.dto.request.InsertLineRequest;
 import com.codewithproject.springsecurity.entities.Line;
 import com.codewithproject.springsecurity.entities.LineProgress;
 import com.codewithproject.springsecurity.entities.LineProgressCompositeKey;
@@ -11,10 +11,10 @@ import com.codewithproject.springsecurity.repository.LineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.codewithproject.springsecurity.config.MessageConstants.*;
 
 @Service
 public class LineServiceImpl {
@@ -57,23 +57,38 @@ public class LineServiceImpl {
         lineRepo.save(line);
     }
 
-    public String insertLineProgress(InsertLineRequest req) {
+    public Map<String, Object> registerToLine(InsertLineRequest req) {
+        Map<String, Object> result = new HashMap<>();
+
+        String userEmail = req.getUserEmail();
+        String token = req.getToken();
+        if (token.isEmpty() || userEmail.isEmpty()) {
+            result.put(MAP_STATUS_CODE, 404);
+            result.put(MAP_MESSAGE, MESS_EMAIL_NOT_FOUND);
+            return result;
+        }
         // Check user exist
         Optional<User> user = userService.getUserDetail(req.getUserEmail());
-        // Check line exist
 
+        // Check line exist
         if (user.isPresent()) {
             LineProgress lineP = new LineProgress();
             LineProgressCompositeKey linePCompositeKey = new LineProgressCompositeKey();
             linePCompositeKey.setLineID(req.getLineID());
             linePCompositeKey.setUserEmail(user.get().getEmail());
 
+            // Insert to line_progress
             lineP.setId(linePCompositeKey);
             lineP.setDepositStatus(req.getDepositStatus());
             lineProgressRepo.save(lineP);
-            return "Success";
+
+            result.put(MAP_STATUS_CODE, 400);
+            result.put(MAP_MESSAGE, MESS_SAVE_SUCCESS);
+            return result;
         }
-        return "Fail";
+        result.put(MAP_STATUS_CODE, 200);
+        result.put(MAP_MESSAGE, MESS_SAVE_FAILED);
+        return result;
     }
 
     public Integer countByBladeCD(String lineID) {

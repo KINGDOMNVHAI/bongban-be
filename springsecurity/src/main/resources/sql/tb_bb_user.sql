@@ -31,7 +31,10 @@ CREATE TABLE IF NOT EXISTS `tb_bb_user` (
 DELETE FROM `tb_bb_user`;
 INSERT INTO `tb_bb_user` (`id`, `email`, `firstname`, `lastname`, `password`, `role`, `username`) VALUES
 	(1, 'nvhai061993@gmail.com', 'Hai Admin', 'Nguyen Viet', '$2a$10$wekB9agEwGb4GWaTIA8cVeHFKSCRKVfsfB.4YE7vLnQ9c1AhZto.m', 1, 'admin1'),
-	(2, 'nvhai2306@gmail.com', 'Hai User', 'Le', '$2a$10$IcK6/J9f7X53tAXSebdAN.LjkV9ouw/jd9zNWEfsSl3kjiYV25b/y', 0, 'user1');
+	(2, 'nvhai2306@gmail.com', 'Hai User', 'Le', '$2a$10$IcK6/J9f7X53tAXSebdAN.LjkV9ouw/jd9zNWEfsSl3kjiYV25b/y', 0, 'user1')
+    (3, 'nvhai061993@gmail.com', 'An User', 'Nguyen', '$2a$10$IcK6/J9f7X53tAXSebdAN.LjkV9ouw/jd9zNWEfsSl3kjiYV25b/y', 0, 'user2')
+
+;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

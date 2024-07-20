@@ -27,6 +27,8 @@ public class InsertLineRequest {
     private Integer endPrice;
 
     // Register Line
+    private String token;
+
     private String lineID;
 
     private String userEmail;

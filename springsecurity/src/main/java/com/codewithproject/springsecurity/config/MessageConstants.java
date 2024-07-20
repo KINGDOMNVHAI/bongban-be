@@ -13,6 +13,7 @@ public class MessageConstants {
     public static final String MESS_SUCCESS = "Success!";
 
     public static final String MESS_INVALID_EMAIL_PASSWORD = "Invalid email or password";
+    public static final String MESS_EMAIL_NOT_FOUND = "Invalid email or password";
 
     public static final String MESS_LOGIN_SUCCESS = "Login Successfully!";
 

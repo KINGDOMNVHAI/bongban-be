@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -29,7 +31,11 @@ public class LineController {
     }
 
     @PostMapping("/public/line/register")
-    public String registerLine(@RequestBody InsertLineRequest req) {
-        return lineServiceImpl.insertLineProgress(req);
+    public Map<String,Object> registerToLine(@RequestBody InsertLineRequest req) {
+        Map<String,Object> result = new HashMap<>();
+        result = lineServiceImpl.registerToLine(req);
+
+//        result.put("message", message);
+        return result;
     }
 }

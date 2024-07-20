@@ -43,7 +43,7 @@ public class UserSeeder {
             User user2 = new User();
             user2.setLastname("Nguyen");
             user2.setFirstname("An User");
-            user2.setEmail("nvhai2306@gmail.com");
+            user2.setEmail("nguyenan@gmail.com");
             user2.setUsername("user2");
 //            user2.setPassword(new BCryptPasswordEncoder().encode("123456"));
             user2.setPassword("123456");
@@ -54,7 +54,7 @@ public class UserSeeder {
             User user3 = new User();
             user3.setLastname("Thanh");
             user3.setFirstname("Xuan User");
-            user3.setEmail("nvhai2306@gmail.com");
+            user3.setEmail("thanhxuan@gmail.com");
             user3.setUsername("user3");
             user3.setPassword(new BCryptPasswordEncoder().encode("123456"));
             user3.setRole(Role.USER);
@@ -62,9 +62,9 @@ public class UserSeeder {
             result.add(user3);
 
             User user4 = new User();
-            user4.setLastname("Nguyen");
-            user4.setFirstname("An User");
-            user4.setEmail("nvhai2306@gmail.com");
+            user4.setLastname("Ngoc");
+            user4.setFirstname("Son User");
+            user4.setEmail("ngocson@gmail.com");
             user4.setUsername("user4");
             user4.setPassword(new BCryptPasswordEncoder().encode("123456"));
             user4.setRole(Role.USER);
@@ -74,7 +74,7 @@ public class UserSeeder {
             User user5 = new User();
             user5.setLastname("Mai");
             user5.setFirstname("Anh User");
-            user5.setEmail("nvhai2306@gmail.com");
+            user5.setEmail("maianh@gmail.com");
             user5.setUsername("user5");
             user5.setPassword(new BCryptPasswordEncoder().encode("123456"));
             user5.setRole(Role.USER);
@@ -84,7 +84,7 @@ public class UserSeeder {
             User user6 = new User();
             user6.setLastname("Doan");
             user6.setFirstname("Duc User");
-            user6.setEmail("nvhai2306@gmail.com");
+            user6.setEmail("doanduc@gmail.com");
             user6.setUsername("user6");
             user6.setPassword(new BCryptPasswordEncoder().encode("123456"));
             user6.setRole(Role.USER);
@@ -94,7 +94,7 @@ public class UserSeeder {
             User user7 = new User();
             user7.setLastname("Pham");
             user7.setFirstname("Thuong User");
-            user7.setEmail("nvhai2306@gmail.com");
+            user7.setEmail("phamthuong@gmail.com");
             user7.setUsername("user7");
             user7.setPassword(new BCryptPasswordEncoder().encode("123456"));
             user7.setRole(Role.USER);
@@ -104,7 +104,7 @@ public class UserSeeder {
             User user8 = new User();
             user8.setLastname("Nguyen");
             user8.setFirstname("Quynh User");
-            user8.setEmail("nvhai2306@gmail.com");
+            user8.setEmail("nguyenquynh@gmail.com");
             user8.setUsername("user8");
             user8.setPassword(new BCryptPasswordEncoder().encode("123456"));
             user8.setRole(Role.USER);
@@ -114,7 +114,7 @@ public class UserSeeder {
             User user9 = new User();
             user9.setLastname("Minh");
             user9.setFirstname("Tan User");
-            user9.setEmail("nvhai2306@gmail.com");
+            user9.setEmail("minhtan@gmail.com");
             user9.setUsername("user9");
             user9.setPassword(new BCryptPasswordEncoder().encode("123456"));
             user9.setRole(Role.USER);
@@ -124,7 +124,7 @@ public class UserSeeder {
             User user10 = new User();
             user10.setLastname("Quoc");
             user10.setFirstname("Viet User");
-            user10.setEmail("nvhai2306@gmail.com");
+            user10.setEmail("quocviet@gmail.com");
             user10.setUsername("user10");
             user10.setPassword(new BCryptPasswordEncoder().encode("123456"));
             user10.setRole(Role.USER);
