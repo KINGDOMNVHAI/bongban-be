@@ -5,6 +5,7 @@ import com.codewithproject.springsecurity.dto.entitydto.LineDto;
 import com.codewithproject.springsecurity.services.impl.LineServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -18,6 +19,13 @@ public class LineController {
 
     @Autowired
     private LineServiceImpl lineServiceImpl;
+
+    @GetMapping("/truncate")
+    public ResponseEntity<String> truncateTable() {
+        lineServiceImpl.truncateLine();
+        lineServiceImpl.seederLine();
+        return ResponseEntity.ok("Success");
+    }
 
     @GetMapping("/public/line/list")
     public List<LineDto> getListLine() {

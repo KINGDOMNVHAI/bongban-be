@@ -8,6 +8,7 @@ import com.codewithproject.springsecurity.entities.LineProgressCompositeKey;
 import com.codewithproject.springsecurity.entities.User;
 import com.codewithproject.springsecurity.repository.LineProgressRepository;
 import com.codewithproject.springsecurity.repository.LineRepository;
+import com.codewithproject.springsecurity.seeder.LineSeeder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,23 @@ public class LineServiceImpl {
     private UserServiceImpl userService;
 
     @Autowired
+    private LineSeeder lineSeeder;
+
+    @Autowired
     private LineRepository lineRepo;
 
     @Autowired
     private LineProgressRepository lineProgressRepo;
+
+    public void truncateLine() {
+        lineRepo.truncateTable();
+    }
+
+    public List<Line> seederLine() {
+        List<Line> result = new ArrayList<>();
+        result = lineSeeder.seederLine();
+        return result;
+    }
 
     public List<LineDto> getListLine() {
         List<LineDto> result = new ArrayList<>();

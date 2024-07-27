@@ -43,6 +43,11 @@ public class AuthenticationController {
         // Tao duong dan <a href="/oauth2/authorization/google">Login with Google</a>
     }
 
+    @GetMapping("/login/google/secured")
+    public String googleLoginSecured() {
+        return "login"; // Return the login view name
+    }
+
 //    @GetMapping("/login/google/callback")
 //    public String googleCallback(Authentication authentication) {
 //        OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
