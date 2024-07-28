@@ -1,18 +1,20 @@
 package com.codewithproject.springsecurity.controller;
 
-import com.codewithproject.springsecurity.dto.response.JwtAuthenticationResponse;
 import com.codewithproject.springsecurity.dto.request.RefreshTokenRequest;
 import com.codewithproject.springsecurity.dto.request.SignInRequest;
 import com.codewithproject.springsecurity.dto.request.SignUpRequest;
+import com.codewithproject.springsecurity.dto.response.JwtAuthenticationResponse;
 import com.codewithproject.springsecurity.entities.User;
 import com.codewithproject.springsecurity.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
-//@CrossOrigin(origins = "*")
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/public")
 @RequiredArgsConstructor
 public class AuthenticationController {
@@ -38,14 +40,13 @@ public class AuthenticationController {
     }
 
     @GetMapping("/login/google")
-    public String googleLogin() {
-        return "login"; // Return the login view name
+    public String googleLogin(@AuthenticationPrincipal OAuth2User principal) {
+        JwtAuthenticationResponse response = authenticationService.getInfoLoginGoogle(principal);
+        String name = response.getFirstname();
+        String email = response.getEmail();
+        return "Name: " + name + "<br>Email: " + email;
+        // Return the login view name
         // Tao duong dan <a href="/oauth2/authorization/google">Login with Google</a>
-    }
-
-    @GetMapping("/login/google/secured")
-    public String googleLoginSecured() {
-        return "login"; // Return the login view name
     }
 
 //    @GetMapping("/login/google/callback")

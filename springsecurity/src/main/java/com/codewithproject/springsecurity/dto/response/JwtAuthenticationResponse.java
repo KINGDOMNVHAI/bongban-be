@@ -7,7 +7,15 @@ import lombok.Setter;
 @Setter
 public class JwtAuthenticationResponse {
 
-    private String emailOrUsername;
+    private String email;
+
+    private String username;
+
+    private String firstname;
+
+    private String lastname;
+
+    private String locale;
 
     private String token;
 

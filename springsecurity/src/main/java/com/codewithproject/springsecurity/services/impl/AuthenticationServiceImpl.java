@@ -1,12 +1,12 @@
 package com.codewithproject.springsecurity.services.impl;
 
 import com.codewithproject.springsecurity.config.MessageConstants;
-import com.codewithproject.springsecurity.dto.response.JwtAuthenticationResponse;
 import com.codewithproject.springsecurity.dto.request.RefreshTokenRequest;
 import com.codewithproject.springsecurity.dto.request.SignInRequest;
 import com.codewithproject.springsecurity.dto.request.SignUpRequest;
-import com.codewithproject.springsecurity.enums.Role;
+import com.codewithproject.springsecurity.dto.response.JwtAuthenticationResponse;
 import com.codewithproject.springsecurity.entities.User;
+import com.codewithproject.springsecurity.enums.Role;
 import com.codewithproject.springsecurity.repository.UserRepository;
 import com.codewithproject.springsecurity.services.AuthenticationService;
 import com.codewithproject.springsecurity.services.JWTService;
@@ -14,8 +14,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -49,6 +53,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public JwtAuthenticationResponse signin(SignInRequest signInRequest) {
+        String email = "";
+        String username = "";
         String pass = signInRequest.getPassword();
         String passHash = new BCryptPasswordEncoder().encode(pass);
         String jwt = null;
@@ -57,14 +63,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         Optional<User> user = userRepository.getUserByEmailOrUsername(signInRequest.getEmailOrUsername());
         if (user.isPresent() && !pass.isEmpty()) {
-            if (user.get().getPassword().equals(pass)) {
-                jwt = jwtService.generateToken(user.get());
-                refreshToken = jwtService.generateRefreshToken(new HashMap<>(), user.get());
+            User dto = user.get();
+            if (dto.getPassword().equals(pass)) {
+                jwt = jwtService.generateToken(dto);
+                refreshToken = jwtService.generateRefreshToken(new HashMap<>(), dto);
                 message = MessageConstants.MESS_LOGIN_SUCCESS;
+                email = dto.getEmail();
+                username = dto.getUsername();
             }
         }
         JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse();
-        jwtAuthenticationResponse.setEmailOrUsername(signInRequest.getEmailOrUsername());
+        jwtAuthenticationResponse.setEmail(email);
+        jwtAuthenticationResponse.setUsername(username);
         jwtAuthenticationResponse.setToken(jwt);
         jwtAuthenticationResponse.setRefreshToken(refreshToken);
         jwtAuthenticationResponse.setMessage(message);
@@ -90,5 +100,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return jwtAuthenticationResponse;
         }
         return null;
+    }
+
+    public JwtAuthenticationResponse loginGoogle() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        OAuth2User auth2User = (OAuth2User) authentication.getPrincipal();
+        return getInfoLoginGoogle(auth2User);
+    }
+
+    public JwtAuthenticationResponse getInfoLoginGoogle(OAuth2User principal) {
+        JwtAuthenticationResponse response = new JwtAuthenticationResponse();
+        if (principal != null) {
+            String picture = principal.getAttribute("picture");
+            response.setEmail(principal.getAttribute("email"));
+            response.setFirstname(principal.getAttribute("given_name"));
+            response.setLastname(principal.getAttribute("family_name"));
+            response.setLocale(principal.getAttribute("locale"));
+        }
+        return response;
+    }
+
+    private void insertLoginGoogleToDB() {
+        System.out.println("insertLoginGoogleToDB");
     }
 }
