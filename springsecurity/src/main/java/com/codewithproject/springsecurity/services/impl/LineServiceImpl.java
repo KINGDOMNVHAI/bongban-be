@@ -79,7 +79,9 @@ public class LineServiceImpl {
                     dto.setDepreciation(b.getDepreciation());
                     dto.setFee(b.getFee());
                     dto.setEndPrice(b.getEndPrice());
-                    dto.setListProgress(lpDto.stream().filter(p -> p.getLineID().equals(dto.getId())).toList());
+                    List<LineProgressDto> listDto = lpDto.stream().filter(p -> p.getLineID().equals(dto.getId())).toList();
+                    dto.setListProgress(listDto);
+                    dto.setCountListProgress(listDto.size());
                     return dto;
                 }).collect(Collectors.toList());
             }

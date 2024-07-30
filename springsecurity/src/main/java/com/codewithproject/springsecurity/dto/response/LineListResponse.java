@@ -31,4 +31,5 @@ public class LineListResponse {
 
     // line_progress table
     private List<LineProgressDto> listProgress;
+    private Integer countListProgress;
 }
