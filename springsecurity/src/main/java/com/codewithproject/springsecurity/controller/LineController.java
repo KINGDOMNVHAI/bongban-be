@@ -1,12 +1,16 @@
 package com.codewithproject.springsecurity.controller;
 
 import com.codewithproject.springsecurity.dto.request.InsertLineRequest;
-import com.codewithproject.springsecurity.dto.entitydto.LineDto;
+import com.codewithproject.springsecurity.dto.response.LineListResponse;
 import com.codewithproject.springsecurity.services.impl.LineServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +32,7 @@ public class LineController {
     }
 
     @GetMapping("/public/line/list")
-    public List<LineDto> getListLine() {
+    public List<LineListResponse> getListLine() {
         return lineServiceImpl.getListLine();
     }
 

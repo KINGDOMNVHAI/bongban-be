@@ -14,6 +14,11 @@ public interface LineProgressRepository extends JpaRepository<LineProgress, Long
             + " FROM tb_bb_line_progress lp ", nativeQuery = true)
     List<Line> getListLineProgress();
 
+    @Query(value = "SELECT lp.* "
+            + " FROM tb_bb_line_progress lp "
+            + " WHERE lp.line_id IN :lineID ", nativeQuery = true)
+    List<LineProgress> getLineProgressByID(@Param("lineID") List<String> lineID);
+
     @Query(value = "SELECT count(lp.line_id) "
             + " FROM tb_bb_line_progress lp "
             + " LEFT JOIN tb_bb_line l ON l.id LIKE lp.line_id "

@@ -1,13 +1,16 @@
-package com.codewithproject.springsecurity.dto.request;
+package com.codewithproject.springsecurity.dto.response;
 
+import com.codewithproject.springsecurity.dto.entitydto.LineProgressDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
-public class InsertLineRequest {
+public class LineListResponse {
 
-    // Insert Line
+    // line table
     private String id;
 
     private String bladeUnitID;
@@ -26,12 +29,6 @@ public class InsertLineRequest {
 
     private Integer endPrice;
 
-    // Register Line
-    private String token; // check user login or not
-
-    private String lineID;
-
-    private String email;
-
-    private String depositStatus;
+    // line_progress table
+    private List<LineProgressDto> listProgress;
 }
