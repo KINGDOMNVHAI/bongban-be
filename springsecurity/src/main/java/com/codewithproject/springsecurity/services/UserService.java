@@ -13,4 +13,6 @@ public interface UserService {
     List<User> seederUser();
 
     Optional<User> getUserDetail(String email);
+
+    String getUserFullname(String email);
 }

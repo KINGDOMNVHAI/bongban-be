@@ -65,6 +65,7 @@ public class LineServiceImpl {
                     dto.setLineID(p.getId().getLineID());
                     dto.setUserEmail(p.getId().getUserEmail());
                     dto.setDepositStatus(p.getDepositStatus());
+                    dto.setName(userService.getUserFullname(p.getId().getUserEmail()));
                     return dto;
                 }).toList();
 

@@ -50,4 +50,14 @@ public class UserServiceImpl implements UserService {
     public Optional<User> getUserDetail(String email) {
         return userRepo.getUserByEmailOrUsername(email);
     }
+
+    @Override
+    public String getUserFullname(String email) {
+        String name = "";
+        Optional<User> user = userRepo.getUserByEmailOrUsername(email);
+        if (user.isPresent()) {
+            name = user.get().getLastname() + " " + user.get().getFirstname();
+        }
+        return name;
+    }
 }

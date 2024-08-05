@@ -8,5 +8,6 @@ import lombok.Setter;
 public class LineProgressDto {
     private String lineID;
     private String userEmail;
+    private String name;
     private String depositStatus;
 }
