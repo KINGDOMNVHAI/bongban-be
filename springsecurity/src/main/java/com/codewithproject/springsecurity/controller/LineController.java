@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -31,9 +32,9 @@ public class LineController {
         return ResponseEntity.ok("Success");
     }
 
-    @GetMapping("/public/line/list")
-    public List<LineListResponse> getListLine() {
-        return lineServiceImpl.getListLine();
+    @PostMapping("/public/line/list")
+    public List<LineListResponse> getListLine(@RequestParam(required = false) String email) {
+        return lineServiceImpl.getListLine(email);
     }
 
     @PostMapping("/public/line/insert")

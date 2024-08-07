@@ -51,7 +51,7 @@ public class LineServiceImpl {
         return result;
     }
 
-    public List<LineListResponse> getListLine() {
+    public List<LineListResponse> getListLine(String email) {
         List<LineListResponse> response = new ArrayList<>();
         List<Line> listLine = lineRepo.getLineHaveProgress();
         if (!listLine.isEmpty()) {
@@ -83,6 +83,11 @@ public class LineServiceImpl {
                     List<LineProgressDto> listDto = lpDto.stream().filter(p -> p.getLineID().equals(dto.getId())).toList();
                     dto.setListProgress(listDto);
                     dto.setCountListProgress(listDto.size());
+
+                    LineProgressDto userLineProgress = (LineProgressDto) listLinePro.stream()
+                            .filter(lp -> lp.getId().getUserEmail().equals(email));
+                    dto.setUserLineProgress(userLineProgress);
+
                     return dto;
                 }).collect(Collectors.toList());
             }

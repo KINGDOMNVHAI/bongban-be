@@ -32,4 +32,7 @@ public class LineListResponse {
     // line_progress table
     private List<LineProgressDto> listProgress;
     private Integer countListProgress;
+
+    // line_progress of user
+    private LineProgressDto userLineProgress;
 }
