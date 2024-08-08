@@ -1,6 +1,7 @@
 package com.codewithproject.springsecurity.controller;
 
 import com.codewithproject.springsecurity.dto.request.InsertLineRequest;
+import com.codewithproject.springsecurity.dto.request.SearchLineRequest;
 import com.codewithproject.springsecurity.dto.response.LineListResponse;
 import com.codewithproject.springsecurity.services.impl.LineServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -33,8 +33,8 @@ public class LineController {
     }
 
     @PostMapping("/public/line/list")
-    public List<LineListResponse> getListLine(@RequestParam(required = false) String email) {
-        return lineServiceImpl.getListLine(email);
+    public List<LineListResponse> getListLine(@RequestBody SearchLineRequest req) {
+        return lineServiceImpl.searchListLine(req);
     }
 
     @PostMapping("/public/line/insert")

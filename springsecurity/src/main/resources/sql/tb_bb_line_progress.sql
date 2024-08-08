@@ -25,11 +25,11 @@ CREATE TABLE IF NOT EXISTS `tb_bb_line_progress` (
 -- Dumping data for table 2024_BB.tb_bb_line_progress: ~5 rows (approximately)
 DELETE FROM `tb_bb_line_progress`;
 INSERT INTO `tb_bb_line_progress` (`line_id`, `user_email`, `deposit_status`) VALUES
-	('2024_03_00003', 'huynhan007@gmail.com', NULL),
-	('2024_03_00003', 'mh@gmail.com', NULL),
-	('2024_03_00003', 'paperheroteam@gmail.com', NULL),
-	('2024_06_00001', 'huynhan@gmail.com', 'Y'),
-	('2024_06_00001', 'mh@gmail.com', 'N');
+	('2024_03_00003', 'ngocson@gmail.com', 'N'),
+	('2024_03_00003', 'thanhxuan@gmail.com', 'N'),
+	('2024_03_00003', 'maianh@gmail.com', 'Y'),
+	('2024_06_00001', 'nguyenan@gmail.com', 'N'),
+	('2024_06_00001', 'thanhxuan@gmail.com', 'Y');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

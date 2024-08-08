@@ -2,6 +2,7 @@ package com.codewithproject.springsecurity.services.impl;
 
 import com.codewithproject.springsecurity.dto.entitydto.LineProgressDto;
 import com.codewithproject.springsecurity.dto.request.InsertLineRequest;
+import com.codewithproject.springsecurity.dto.request.SearchLineRequest;
 import com.codewithproject.springsecurity.dto.response.LineListResponse;
 import com.codewithproject.springsecurity.entities.Line;
 import com.codewithproject.springsecurity.entities.LineProgress;
@@ -51,7 +52,7 @@ public class LineServiceImpl {
         return result;
     }
 
-    public List<LineListResponse> getListLine(String email) {
+    public List<LineListResponse> searchListLine(SearchLineRequest req) {
         List<LineListResponse> response = new ArrayList<>();
         List<Line> listLine = lineRepo.getLineHaveProgress();
         if (!listLine.isEmpty()) {
@@ -84,9 +85,20 @@ public class LineServiceImpl {
                     dto.setListProgress(listDto);
                     dto.setCountListProgress(listDto.size());
 
-                    LineProgressDto userLineProgress = (LineProgressDto) listLinePro.stream()
-                            .filter(lp -> lp.getId().getUserEmail().equals(email));
-                    dto.setUserLineProgress(userLineProgress);
+                    // get LineProgressDto of email
+                    List<LineProgressDto> userLineProgress = lpDto.stream()
+                            .filter(lp -> lp.getUserEmail().equals(req.getEmail()))
+                            .map(lp -> {
+                                LineProgressDto userLine = new LineProgressDto();
+                                userLine.setLineID(lp.getLineID());
+                                userLine.setUserEmail(lp.getUserEmail());
+                                userLine.setDepositStatus(lp.getDepositStatus());
+                                return userLine;
+                            }).toList();
+
+                    if (!userLineProgress.isEmpty()) {
+                        dto.setUserLineProgress(userLineProgress.get(0));
+                    }
 
                     return dto;
                 }).collect(Collectors.toList());

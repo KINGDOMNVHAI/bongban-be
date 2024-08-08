@@ -214,3 +214,11 @@ nohup javar -jar springsecurity.jar
 
 B/Front-end
 /www/wwwroot/bongban/build
+
+
+
+// Chuc nang dang ky
+Neu chua dang ky -> hien thi nut dang ky
+Neu da dang ky -> tra ve thong tin chuyen khoan
+
+email -> get list progress
