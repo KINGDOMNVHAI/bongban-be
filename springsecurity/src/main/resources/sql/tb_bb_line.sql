@@ -25,15 +25,17 @@ CREATE TABLE IF NOT EXISTS `tb_bb_line` (
   `depreciation` int(11) DEFAULT NULL,
   `fee` int(11) DEFAULT NULL,
   `end_price` int(11) DEFAULT NULL,
+  `active_status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- Dumping data for table 2024_BB.tb_bb_line: ~3 rows (approximately)
 TRUNCATE TABLE `tb_bb_line`;
-INSERT INTO `tb_bb_line` (`blade_unit_id`, `id`, `period_cnt`, `period`, `init_price`, `deposit`, `depreciation`, `fee`, `end_price`) VALUES
-	('BUT_TMB_ALC_FL_00001', '2024_03_00003', '3', '1M', 3000000, 300000, 100000, 50000, 2700000),
-	('NTK_ACS_XXX_FL_00001', '2024_06_00001', '6', '1M', 4000000, 300000, 100000, 50000, 3700000),
-	('NTK_ACS_XXX_FL_00002', '2024_12_00002', '12', '2W', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tb_bb_line` (`blade_unit_id`, `id`, `period_cnt`, `period`, `init_price`, `deposit`, `depreciation`, `fee`, `end_price`, `active_status`) VALUES
+	('BUT_TMB_ALC_FL_00001', '2024_03_00003', 3, '1M', 3000000, 300000, 100000, 50000, 2700000, 0),
+	('BUT_TMB_ALC_FL_00002', '2024_05_00001', 5, '1M', 3000000, 300000, 100000, 50000, 2700000, 0),
+	('NTK_ACS_FL_00001', '2024_05_00051', 4, '1M', 4000000, 50000, 50000, 50000, 2000000, 0),
+	('NTK_ACS_FL00002', '2024_06_00001', 3, '2W', 1000000, 100000, 100000, 100000, 100000, 0);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

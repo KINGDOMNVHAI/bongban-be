@@ -46,4 +46,7 @@ public class Line {
 
     @Column(name = "end_price")
     private Integer endPrice;
+
+    @Column(name = "active_status")
+    private boolean activeStatus;
 }
