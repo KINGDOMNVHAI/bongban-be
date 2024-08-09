@@ -1,5 +1,6 @@
 package com.codewithproject.springsecurity.services.impl;
 
+import com.codewithproject.springsecurity.config.MessageConstants;
 import com.codewithproject.springsecurity.dto.entitydto.LineProgressDto;
 import com.codewithproject.springsecurity.dto.request.InsertLineRequest;
 import com.codewithproject.springsecurity.dto.request.SearchLineRequest;
@@ -21,12 +22,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.codewithproject.springsecurity.config.MessageConstants.MAP_MESSAGE;
-import static com.codewithproject.springsecurity.config.MessageConstants.MAP_STATUS_CODE;
-import static com.codewithproject.springsecurity.config.MessageConstants.MESS_EMAIL_NOT_FOUND;
-import static com.codewithproject.springsecurity.config.MessageConstants.MESS_SAVE_FAILED;
-import static com.codewithproject.springsecurity.config.MessageConstants.MESS_SAVE_SUCCESS;
-
 @Service
 public class LineServiceImpl {
 
@@ -47,9 +42,7 @@ public class LineServiceImpl {
     }
 
     public List<Line> seederLine() {
-        List<Line> result = new ArrayList<>();
-        result = lineSeeder.seederLine();
-        return result;
+        return lineSeeder.seederLine();
     }
 
     public List<LineListResponse> searchListLine(SearchLineRequest req) {
@@ -136,8 +129,8 @@ public class LineServiceImpl {
         String email = req.getEmail();
         String token = req.getToken();
         if (token.isEmpty() || email.isEmpty()) {
-            result.put(MAP_STATUS_CODE, 404);
-            result.put(MAP_MESSAGE, MESS_EMAIL_NOT_FOUND);
+            result.put(MessageConstants.MAP_STATUS_CODE, 404);
+            result.put(MessageConstants.MAP_MESSAGE, MessageConstants.MESS_EMAIL_NOT_FOUND);
             return result;
         }
         // Check user exist
@@ -155,12 +148,12 @@ public class LineServiceImpl {
             lineP.setDepositStatus(req.getDepositStatus());
             lineProgressRepo.save(lineP);
 
-            result.put(MAP_STATUS_CODE, 400);
-            result.put(MAP_MESSAGE, MESS_SAVE_SUCCESS);
+            result.put(MessageConstants.MAP_STATUS_CODE, 400);
+            result.put(MessageConstants.MAP_MESSAGE, MessageConstants.MESS_SAVE_SUCCESS);
             return result;
         }
-        result.put(MAP_STATUS_CODE, 200);
-        result.put(MAP_MESSAGE, MESS_SAVE_FAILED);
+        result.put(MessageConstants.MAP_STATUS_CODE, 200);
+        result.put(MessageConstants.MAP_MESSAGE, MessageConstants.MESS_SAVE_FAILED);
         return result;
     }
 

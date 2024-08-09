@@ -222,3 +222,19 @@ Neu chua dang ky -> hien thi nut dang ky
 Neu da dang ky -> tra ve thong tin chuyen khoan
 
 email -> get list progress
+
+
+==========================
+Phase 1:
+Thứ tự chức năng đăng ký
+Login -> đăng ký thành công -> gửi thông tin thanh toán
+
+Phase 2:
+Nếu user không thanh toán ngay mà đợi thời gian sau mới thanh toán thì thông tin thanh toán lưu ở đâu?
+Profile user tạo Payment
+
+Line có cần kích hoạt không?
+Ví dụ Line có 10 người. Một số chưa đặt cọc thì sao?
+Nếu tất cả đều đóng tiền rồi -> kích hoạt
+Chưa đóng -> thời hạn bao lâu -> nếu hết thời hạn không đóng thì auto kick?
+Nếu kích hoạt rồi -> không ai vào line được nữa
